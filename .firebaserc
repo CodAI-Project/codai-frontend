@@ -1,0 +1,23 @@
+{
+  "projects": {
+    "default": "codai-development",
+    "dev": "codai-development",
+    "prod": "codai-production"
+  },
+  "targets": {
+    "codai-development": {
+      "hosting": {
+        "codai": [
+          "codai-hub-development"
+        ]
+      }
+    },
+    "codai-production": {
+      "hosting": {
+        "codai": [
+          "codai-hub"
+        ]
+      }
+    }
+  }
+}
