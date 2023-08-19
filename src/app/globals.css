@@ -2,26 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --primary-colors-black-bg: #131619;
+    --colors-primary-purple: #9780E5;
+    --colors-primary-magenta: #E666CC;
+    --primary-gradient-logo: linear-gradient(90deg, rgba(130,219,247,1) 0%, rgba(182,240,156,1) 100%);
+    --primary-gradient-background: #linear-gradient(90deg, rgba(48,69,201,1) 0%, rgba(101,190,218,1) 45%, rgba(154,211,127,1) 100%);
+    --colors-primary-green: #B6F09C;
+    --colors-primary-dark: #0D0F10;
+    --colors-primary-white: white;
+    
+  }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --bg-primary-color: #131619; 
   }
+}
+
+.shadow-neon {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.shadow-neon:hover {
+  box-shadow: 0 0 10px #6dfe6d1f, 0 0 20px #114b1130, 0 0 30px #2ad22a53, 0 0 40px #158d155e;
+}
+
+.abstract-bg {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.abstract-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #85ddf124, #9ee6c723, #4b4b4b3c, transparent);
+  background: linear-gradient(to bottom, #3fc3e15d, #3acc8d39, #3a3a3a3c, transparent);
+  animation: fadeIn 20s ease-in-out infinite;
+}
+
+
+.bg-futuristic {
+  animation: glowAnimation 10s infinite}
+
+@keyframes glowAnimation {
+  0%, 100% {
+    opacity: 0.8;
+    box-shadow: 0 0 5px rgba(0, 153, 255, 0.94);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgb(0, 255, 204);
+  }
+}
+
+
+
+
+.abstract-bg::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, var(--bg-primary-color), transparent);
+  animation: fadeIn 3s ease-in-out infinite reverse;
+}
+
+@keyframes fadeIn {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.gradient-text {
+  background-image: var(--primary-gradient-logo);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+html{
+  background-color: var(--bg-primary-color);
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--bg-primary-color); 
 }
