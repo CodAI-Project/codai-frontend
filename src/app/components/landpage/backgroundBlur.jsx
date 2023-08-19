@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function MyComponent() {
+export default function BackgroundBlur() {
   return (
     <div className="abstract-bg"/>
 

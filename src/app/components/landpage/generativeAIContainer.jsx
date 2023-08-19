@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
 
-const YourComponent = () => {
+export default function GenerativeAIContainer() {
   return (
     <div className="bg-futurist">
       <div className="relative max-w-full mx-4 md:mx-16 lg:mx-60 my-20 bg-opacity-60 bg-slate-800	 backdrop-blur-md rounded-3xl flex flex-col md:flex-row items-center justify-center p-6 md:p-16">
@@ -58,4 +58,3 @@ const StyledGradientButton = ({ className, children }) => (
   </Button>
 );
 
-export default YourComponent;

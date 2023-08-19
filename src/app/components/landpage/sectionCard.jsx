@@ -1,5 +1,5 @@
 import React from "react";
-import CardCustom from "./Card";
+import CardCustom from "./cardCustom";
 
 
 const cardInfos = [

@@ -1,8 +1,9 @@
 'use client'
 import React from "react";
 import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
-import { CodaiIcon } from "./CodaiIcon";
-export default function App() {
+import { CodaiIcon } from "./codaiIcon";
+
+export default function NavbarCustom() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
