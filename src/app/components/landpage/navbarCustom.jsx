@@ -1,7 +1,9 @@
 'use client'
 import React, { useState } from "react";
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarContent, NavbarItem, Button,Link } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarContent, NavbarItem } from "@nextui-org/react";
 import { CodaiIcon } from "./codaiIcon";
+import Link from "next/link";
+
 export default function NavbarCustom() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -9,8 +11,6 @@ export default function NavbarCustom() {
     "Planos",
     "Sobre nós",
   ];
-
-
 
   return (
     <Navbar
@@ -34,15 +34,11 @@ export default function NavbarCustom() {
       </NavbarContent>
 
 
-      <NavbarContent justify="end">
+      <NavbarContent as="div" justify="end">
         <NavbarItem>
-
-          <Button color="primary" className="text-white px-9 border-emerald-600" variant="bordered">
-            <Link href="/login">
-              Entrar
-            </Link>
-          </Button>
-
+          <Link href="/login" passHref>
+            Entrar
+          </Link>
         </NavbarItem>
       </NavbarContent>
     </Navbar >

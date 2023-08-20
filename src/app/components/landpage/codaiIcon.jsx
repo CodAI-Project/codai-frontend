@@ -4,7 +4,7 @@ import Link from "next/link";
 export const CodaiIcon = () => (
 
     <div>
-        <Link href="/">
+        <Link href="/" passHref>
             <GradientText>CodAI</GradientText>
         </Link>
     </div>

@@ -1,176 +1,255 @@
 'use client'
-import React, { useState } from 'react';
-import { Input, Button } from "@nextui-org/react";
+import React, { useState, useEffect } from 'react';
+import { Button } from "@nextui-org/react";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import Link from 'next/link';
 import { CodaiIcon } from '../../components/landpage/codaiIcon';
-import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase';
+import InputCustom from '../../ui/inputCustom';
+import { EyeFilledIcon } from './components/iconEye';
+import { EyeSlashFilledIcon } from './components/eyeSlashFilledIcon';
+import { useRouter } from 'next/navigation'
+import showToast from '../../ui/toastCustom';
+import 'react-toastify/dist/ReactToastify.css';
 const provider = new GoogleAuthProvider();
-
+const providerGit = new GithubAuthProvider()
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email('Please enter a valid email').required('Email é obrigatório'),
+  password: Yup.string().required('Senha é obrigatória'),
+});
 
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [isVisible, setIsVisible] = React.useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [showLoginError, setShowLoginError] = useState(false);
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+
+  // const { isLoggedIn } = useUser();
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     router.push('/rota'); // Redirecionar para a rota desejada
+  //   }
+  // }, [isLoggedIn]);
+
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        await signInWithEmailPassword(values.email, values.password);
+
+      } catch (error) {
+        console.error('Erro de autenticação:', error);
+      }
+    },
+  });
+
+  const signInWithEmailPassword = async (email, password) => {
+    setLoading(true);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push('/rota');
+      showToast("Sucesso na autenticação", "sucess")
+    } catch (error) {
+      setShowLoginError(true);
+      showToast("Falha na autenticação", "error")
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleGoogleSignIn = async () => {
+    
+    try {
+      setLoading(true);
+      await signInWithPopup(auth, provider);
+      showToast("Sucesso na autenticação Google", "success")
+      router.push('/rota');
+    }
+    catch (error) {
+      showToast("Falha na autenticação Google", "error")
+      setShowLoginError(true);
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
 
 
-  const handleGoogleSignIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-
-        console.log(token)
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-  };
-
-  const handleGithubSignIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-        const credential = GithubAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-
-        const user = result.user;
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GithubAuthProvider.credentialFromError(error);
-        // ...
-      });
+  const handleGithubSignIn = async () => {
+    try {
+      setLoading(true);
+      await signInWithPopup(auth, providerGit)
+      showToast("Sucesso na autenticação Github", "success")
+    } catch (error) {
+      setShowLoginError(true);
+      showToast("Falha na autenticação Github", "error")
+    } finally {
+      setLoading(false);
+    }
   };
 
 
   return (
+    <>
 
+      <div className="flex h-screen overflow-hidden">
+        <div className="absolute top-1 left-2 p-4">
+          <CodaiIcon className="w-12 h-12" />
+        </div>
+        <div className="w-full lg:w-1/2 flex items-center justify-center">
+          <div className="w-3/4">
 
-
-    <div className="flex h-screen overflow-hidden">
-      <div className="absolute top-1 left-2 p-4">
-        <CodaiIcon className="w-12 h-12" />
-      </div>
-      <div className="w-full lg:w-1/2 flex items-center justify-center">
-        <div className="w-3/4">
-
-          <div className='mb-16'>
-            <h1 className='text-2xl	'>Vamos ser <GradientText>criativos!</GradientText></h1>
-            <div className='mt-4 text-base text-gray-400'>
-              <span>Faça login no CodAI para começar a criar a magia</span>
-            </div>
-          </div>
-
-
-          <form className="space-y-2" onSubmit={handleSubmit}>
-
-
-            <Input
-              className='border-slate-700 border-1 mb-6 rounded-lg'
-              radius='sm'
-              size='lg'
-              type="email"
-              placeholder="email@codai.com"
-              labelPlacement="outside"
-              startContent={
-                <img src='./mail-icon.svg' />
-              }
-            />
-
-            <Input
-              className='border-slate-700 border-1 rounded-lg'
-              radius='sm'
-              size='lg'
-              type="password"
-              placeholder="Password"
-              labelPlacement="outside"
-              startContent={
-                <img src='./password-icon.svg' />
-              }
-            />
-
-            <div className='flex float-right'>
-              <span className='text-transparent my-4 font-semibold  bg-clip-text bg-gradient-to-r from-malibu-300 to-sulu-200'> <Link href="forget">Esqueceu a senha?</Link></span>
-            </div>
-
-            <Button
-              radius='md'
-              size='lg'
-              type="submit"
-              className="w-full font-semibold mb-4 bg-sulu-300 text-black  py-2hover:bg-sulu-300 transition duration-300"
-            >
-              Login
-            </Button>
-
-            <div className="pt-6 pb-6">
-              <div className="flex items-center">
-                <hr className="flex-grow border-t border-gray-400" />
-                <span className="mx-4 text-xs text-gray-400">Ou continue com</span>
-                <hr className="flex-grow border-t border-gray-400" />
+            <div className='mb-8'>
+              <h1 className='text-3xl	'>Vamos ser <GradientText className="font-bold">criativos!</GradientText></h1>
+              <div className='mt-4 text-base text-gray-400'>
+                <span>Faça login no CodAI para começar a criar a magia</span>
               </div>
             </div>
-
-            <div className="flex space-x-4 mt-4">
-              <Button
-                startContent={<img src='./google-icon.svg' className='w-7' />}
+            <form className="space-y-2" onSubmit={formik.handleSubmit}>
+              <InputCustom
                 radius='sm'
                 size='lg'
-                type="submit"
-                onClick={handleGoogleSignIn}
-                className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
-              >
-                Continue com Google
-              </Button>
+                type="email"
+                placeholder="email@codai.com"
+                labelPlacement="outside"
+                id="email"
+                name="email"
+                autoComplete="false"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                validationState={formik.touched.email && formik.errors.email ? "invalid" : "valid"}
+                errorMessage={formik.touched.email && formik.errors.email ? formik.errors.email : ""}
+                startContent={<img src='./mail-icon.svg' />}
+              />
 
-              <Button
-                startContent={<img src='./github-icon.svg' className='w-7' />}
+              <InputCustom
                 radius='sm'
                 size='lg'
+                placeholder="Password"
+                labelPlacement="outside"
+                id="password"
+                name="password"
+                endContent={
+                  <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                    {isVisible ? (
+                      <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                    ) : (
+                      <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                    )}
+                  </button>
+                }
+                type={isVisible ? "text" : "password"}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                validationState={formik.touched.password && formik.errors.password ? "invalid" : "valid"}
+                errorMessage={formik.touched.password && formik.errors.password ? formik.errors.password : ""}
+                startContent={<img src='./password-icon.svg' />}
+              />
+
+              <div className='flex float-right'>
+                <span className='text-transparent my-4 font-semibold  bg-clip-text bg-gradient-to-r from-malibu-300 to-sulu-200'>
+                  <a href="forget">Esqueceu a senha?</a>
+                </span>
+              </div>
+
+              <Button
+                radius='md'
+                size='lg'
                 type="submit"
-                onClick={handleGithubSignIn}
-                className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
+                className="w-full font-semibold mb-4 bg-sulu-300 text-black py-2 hover:bg-sulu-300 transition duration-300"
+                isLoading={loading}
+
               >
-                Continue com GitHub
+                {loading ? "Carregando..." : "Login"}
               </Button>
+              <div className="pt-6 pb-6">
+                <div className="flex items-center justify-center">
+                  <hr className="flex-grow border-t border-gray-400 hidden sm:block" />
+                  <div className="mx-4 text-xs text-gray-400 flex items-center justify-center sm:justify-start">
+                    Ou continue com
+                  </div>
+                  <hr className="flex-grow border-t border-gray-400 hidden sm:block" />
+                </div>
 
-            </div>
+              </div>
 
-          </form>
-        </div>
+              <div className="flex space-x-4 mt-4">
+
+                <Button
+                  startContent={<img src='./google-icon.svg' className='w-7' />}
+                  radius='sm'
+                  size='lg'
+                  type="button"
+                  onClick={() => {
+                    handleGoogleSignIn(); // Chamar a função de autenticação
+                  }}
+                  className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
+                  isLoading={loading}
+                >
+                  {loading ? "Carregando..." : "Continue com Google"}
+                </Button>
+
+                <Button
+                  startContent={<img src='./github-icon.svg' className='w-7' />}
+                  radius='sm'
+                  size='lg'
+                  type="button"
+                  onClick={() => {
+                    handleGithubSignIn(); // Chamar a função de autenticação
+                  }}
+                  className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
+                  isLoading={loading}
+                >
+                  {loading ? "Carregando..." : "Continue com GitHub"}
+                </Button>
+              </div>
+
+
+              <div className=''>
+
+                <span className='text-base mt-5 text-gray-400'>Não tem conta? <GradientText className="font-bold" href="/register">Registrar</GradientText> </span>
+
+              </div>
+
+            </form>
+          </div>
+         
+        </div >
+        <div className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center" style={{ backgroundImage: "url('./bg-login.svg')" }}></div>
       </div >
-      <div className="hidden lg:flex flex-grow bg-cover bg-center" style={{ backgroundImage: "url('./bg-login.svg')" }}></div>
-    </div >
+      
+    </>
   );
 };
 
 
 
-const GradientText = ({ children }) => (
-  <span className="gradient-text font-semibold">{children}</span>
-);
+const GradientText = ({ children, className, href, ...restProps }) => {
+  if (href) {
+    return (
+      <Link className={`gradient-text ${className}`} href={href} {...restProps}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <span className={`gradient-text ${className}`} {...restProps}>
+      {children}
+    </span>
+  );
+};
