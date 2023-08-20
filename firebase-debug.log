@@ -1,0 +1,97 @@
+[debug] [2023-08-20T01:34:26.381Z] ----------------------------------------------------------------------
+[debug] [2023-08-20T01:34:26.385Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Luans\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2023-08-20T01:34:26.386Z] CLI Version:   12.4.8
+[debug] [2023-08-20T01:34:26.386Z] Platform:      win32
+[debug] [2023-08-20T01:34:26.387Z] Node Version:  v18.17.0
+[debug] [2023-08-20T01:34:26.388Z] Time:          Sat Aug 19 2023 22:34:26 GMT-0300 (Brasilia Standard Time)
+[debug] [2023-08-20T01:34:26.388Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-20T01:34:26.539Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-20T01:34:26.540Z] > authorizing via signed-in user (codaideveloper@gmail.com)
+[debug] [2023-08-20T01:34:26.540Z] [iam] checking project codai-development for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-08-20T01:34:26.543Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/codai-development:testIamPermissions [none]
+[debug] [2023-08-20T01:34:26.543Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/codai-development:testIamPermissions x-goog-quota-user=projects/codai-development
+[debug] [2023-08-20T01:34:26.543Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/codai-development:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-08-20T01:34:27.520Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/codai-development:testIamPermissions 200
+[debug] [2023-08-20T01:34:27.520Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/codai-development:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-08-20T01:34:27.521Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/codai-development [none]
+[debug] [2023-08-20T01:34:27.908Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/codai-development 200
+[debug] [2023-08-20T01:34:27.909Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/codai-development {"projectId":"codai-development","projectNumber":"190262650042","displayName":"codai-development","name":"projects/codai-development","resources":{"hostingSite":"codai-development"},"state":"ACTIVE","etag":"1_9b8c0d8f-60e2-4043-8298-e391d1889622"}
+[debug] [2023-08-20T01:34:34.167Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/codai-development/sites pageToken=&pageSize=10
+[debug] [2023-08-20T01:34:35.383Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/codai-development/sites 200
+[debug] [2023-08-20T01:34:35.385Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/codai-development/sites {"sites":[{"name":"projects/codai-development/sites/codai-development","defaultUrl":"https://codai-development.web.app","appId":"1:190262650042:web:d7b2c3fafbf815faf50e83","type":"DEFAULT_SITE"},{"name":"projects/codai-development/sites/codai-hub-development","defaultUrl":"https://codai-hub-development.web.app","type":"USER_SITE"},{"name":"projects/codai-development/sites/dev-codai","defaultUrl":"https://dev-codai.web.app","type":"USER_SITE"}]}
+[debug] [2023-08-20T01:34:35.386Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/codai-development/sites 
+[debug] [2023-08-20T01:34:36.407Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/codai-development/sites 200
+[debug] [2023-08-20T01:34:36.407Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/codai-development/sites {"sites":[{"name":"projects/codai-development/sites/codai-development","defaultUrl":"https://codai-development.web.app","appId":"1:190262650042:web:d7b2c3fafbf815faf50e83","type":"DEFAULT_SITE"},{"name":"projects/codai-development/sites/codai-hub-development","defaultUrl":"https://codai-hub-development.web.app","type":"USER_SITE"},{"name":"projects/codai-development/sites/dev-codai","defaultUrl":"https://dev-codai.web.app","type":"USER_SITE"}]}
+[debug] [2023-08-20T01:34:36.407Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/codai-development/webApps/1:190262650042:web:d7b2c3fafbf815faf50e83/config [none]
+[debug] [2023-08-20T01:34:37.384Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/codai-development/webApps/1:190262650042:web:d7b2c3fafbf815faf50e83/config 200
+[debug] [2023-08-20T01:34:37.384Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/codai-development/webApps/1:190262650042:web:d7b2c3fafbf815faf50e83/config {"projectId":"codai-development","appId":"1:190262650042:web:d7b2c3fafbf815faf50e83","storageBucket":"codai-development.appspot.com","apiKey":"AIzaSyD3ySG8RyS6wix-O8noYsK9tPa1W2sPo3o","authDomain":"codai-development.firebaseapp.com","messagingSenderId":"190262650042","measurementId":"G-M115V5N9DS"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[info] - info Creating an optimized production build...
+
+[info] - warn Compiled with warnings
+
+
+[info] - info Linting and checking validity of types...
+
+[info] ./node_modules/node-fetch/lib/index.js
+Module not found: Can't resolve 'encoding' in 'D:\CODAI-PROJECT\codai-frontend\node_modules\node-fetch\lib'
+
+Import trace for requested module:
+./node_modules/node-fetch/lib/index.js
+./node_modules/@firebase/auth/dist/node-esm/index.js
+./node_modules/firebase/auth/dist/index.mjs
+./src/app/(auth)/login/page.jsx
+
+
+[info] - info Collecting page data...
+
+[info] - info Generating static pages (0/6)
+
+[info] - info Generating static pages (1/6)
+
+[info] - info Generating static pages (2/6)
+
+[info] - info Generating static pages (4/6)
+
+[info] - info Generating static pages (6/6)
+
+[info] - info Finalizing page optimization...
+
+[info] 
+
+[info] Route (app)                                Size     First Load JS
+┌ ○ /                                      16.1 kB         159 kB
+├ ○ /favicon.ico                           0 B                0 B
+├ ○ /login                                 74.4 kB         217 kB
+└ ○ /register                              137 B          78.7 kB
++ First Load JS shared by all              78.5 kB
+  ├ chunks/596-61d470c525907f12.js         26.1 kB
+  ├ chunks/fd9d1056-76aadce26f555392.js    50.5 kB
+  ├ chunks/main-app-5120875ad677187d.js    219 B
+  └ chunks/webpack-fc09ce9f4abc7f3b.js     1.74 kB
+
+Route (pages)                              Size     First Load JS
+─ ○ /404                                   182 B          76.5 kB
++ First Load JS shared by all              76.4 kB
+  ├ chunks/framework-8883d1e9be70c3da.js   45.1 kB
+  ├ chunks/main-68ec179975454964.js        29.4 kB
+  ├ chunks/pages/_app-52924524f99094ab.js  195 B
+  └ chunks/webpack-fc09ce9f4abc7f3b.js     1.74 kB
+
+[info] 
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+
+
+[debug] [2023-08-20T01:43:16.600Z] Error: ENOENT: no such file or directory, open 'D:\CODAI-PROJECT\codai-frontend\.next\routes-manifest.json'
+[error] 
+[error] Error: An unexpected error has occurred.

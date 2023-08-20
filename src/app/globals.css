@@ -2,23 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --primary-colors-black-bg: #131619;
-    --colors-primary-purple: #9780E5;
-    --colors-primary-magenta: #E666CC;
-    --primary-gradient-logo: linear-gradient(90deg, rgba(130,219,247,1) 0%, rgba(182,240,156,1) 100%);
-    --primary-gradient-background: #linear-gradient(90deg, rgba(48,69,201,1) 0%, rgba(101,190,218,1) 45%, rgba(154,211,127,1) 100%);
-    --colors-primary-green: #B6F09C;
-    --colors-primary-dark: #0D0F10;
-    --colors-primary-white: white;
-    
-  }
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --primary-colors-black-bg: #131619;
+  --colors-primary-purple: #9780E5;
+  --colors-primary-magenta: #E666CC;
+  --primary-gradient-logo: linear-gradient(90deg, rgba(130, 219, 247, 1) 0%, rgba(182, 240, 156, 1) 100%);
+  --primary-gradient-background: linear-gradient(90deg, rgba(48, 69, 201, 1) 0%, rgba(101, 190, 218, 1) 45%, rgba(154, 211, 127, 1) 100%);
+  --colors-primary-green: #B6F09C;
+  --colors-primary-dark: #0D0F10;
+  --colors-primary-white: white;
+
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --bg-primary-color: #131619; 
+    --bg-primary-color: #131619;
   }
 }
 
@@ -52,16 +52,20 @@
 
 
 .bg-futuristic {
-  animation: glowAnimation 10s infinite}
+  animation: glowAnimation 10s infinite
+}
 
 @keyframes glowAnimation {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.8;
-    box-shadow: 0 0 5px rgba(0, 153, 255, 0.94);
+    box-shadow: 0 0 15px rgba(0, 153, 255, 0.623);
   }
+
   50% {
     opacity: 1;
-    box-shadow: 0 0 5px rgb(0, 255, 204);
+    box-shadow: 0 0 15px rgb(0, 255, 204, 0.623);
   }
 }
 
@@ -80,26 +84,58 @@
 }
 
 @keyframes fadeIn {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
 }
 
 .gradient-text {
-  background-image: var(--primary-gradient-logo);
-  -webkit-background-clip: text;
+  background-image: var(--primary-gradient-background);
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+.gradient-text-logo {
+  background-image: var(--primary-gradient-logo);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 22px;
+  font-weight: 800;
+  -webkit-text-fill-color: transparent;
+  text-shadow: -1px 1px 14px #93e6706e, -1px 2px 20px #0090ffcf;
+  cursor: pointer;
+  animation: fadeInShadown 5s ease-in-out infinite reverse;
 
-html{
+}
+
+
+
+@keyframes fadeInShadown {
+
+  0%,
+  100% {
+    text-shadow: -4px -4px 14px #93e6706e, 5px -3px 20px #0090ffcf;
+  }
+
+  50% {
+    text-shadow: -4px 7px 14px #93e6702c, 9px -6px 20px #0091ff48;
+  }
+}
+
+
+
+
+html {
   background-color: var(--bg-primary-color);
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: var(--bg-primary-color); 
+  background-color: var(--bg-primary-color);
 }

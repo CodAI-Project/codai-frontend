@@ -1,8 +1,8 @@
 'use client'
 import React from "react";
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
 import { CodaiIcon } from "./codaiIcon";
-
+import Link from "next/link";
 export default function NavbarCustom() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
@@ -52,9 +52,13 @@ export default function NavbarCustom() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" className="text-white px-9 border-emerald-600" href="#" variant="bordered">
-            Entrar
+
+          <Button color="primary" className="text-white px-9 border-emerald-600" variant="bordered">
+            <Link href="/login">
+              Entrar
+            </Link>
           </Button>
+
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu isBlurred={true} className="">

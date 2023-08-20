@@ -1,7 +1,5 @@
 import React from "react";
 import CardCustom from "./cardCustom";
-
-
 const cardInfos = [
   {
     image: "./clock.svg",

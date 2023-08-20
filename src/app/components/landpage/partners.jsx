@@ -1,5 +1,4 @@
 import React from 'react';
-
 export default function Partners() {
     return (
         <div className="max-w-fullbackdrop-blur-md flex flex-col md:flex-row items-center justify-center p-6 md:p-16 relative">
