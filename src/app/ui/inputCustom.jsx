@@ -4,7 +4,7 @@ import { Input } from '@nextui-org/react';
 const InputCustom = ({ ...props }) => {
   return (
     <Input
-      className='mb-6 rounded-lg'
+      className={`mb-6 rounded-lg ${props.className}`}
       autoComplete="false"
       {...props}
       style={{

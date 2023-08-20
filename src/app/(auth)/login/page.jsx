@@ -14,10 +14,11 @@ import { EyeSlashFilledIcon } from '../components/eyeSlashFilledIcon';
 import { useRouter } from 'next/navigation'
 import showToast from '../../ui/toastCustom';
 import 'react-toastify/dist/ReactToastify.css';
+import ForgetPassword from '../components/forgetPassword';
 const provider = new GoogleAuthProvider();
 const providerGit = new GithubAuthProvider()
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Please enter a valid email').required('Email é obrigatório'),
+  email: Yup.string().email('Digite um email válido').required('Email é obrigatório'),
   password: Yup.string().required('Senha é obrigatória'),
 });
 
@@ -28,16 +29,15 @@ export default function Login() {
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [showLoginError, setShowLoginError] = useState(false);
 
 
-  const { isLoggedIn } = useUser();
+  // const { isLoggedIn } = useUser();
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push(routeToGo);
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     router.push(routeToGo);
+  //   }
+  // }, [isLoggedIn]);
 
 
   const formik = useFormik({
@@ -64,14 +64,13 @@ export default function Login() {
       router.push(routeToGo);
       showToast("Sucesso na autenticação", "success")
     } catch (error) {
-      setShowLoginError(true);
       showToast("Falha na autenticação", "error")
     } finally {
       setLoading(false);
     }
   };
   const handleGoogleSignIn = async () => {
-    
+
     try {
       setLoading(true);
       await signInWithPopup(auth, provider);
@@ -80,7 +79,6 @@ export default function Login() {
     }
     catch (error) {
       showToast("Falha na autenticação Google", "error")
-      setShowLoginError(true);
     }
     finally {
       setLoading(false);
@@ -138,6 +136,7 @@ export default function Login() {
               />
 
               <InputCustom
+              className="mb-1"
                 radius='sm'
                 size='lg'
                 placeholder="Password"
@@ -163,16 +162,14 @@ export default function Login() {
               />
 
               <div className='flex float-right'>
-                <span className='text-transparent my-4 font-semibold  bg-clip-text bg-gradient-to-r from-malibu-300 to-sulu-200'>
-                  <a href="forget">Esqueceu a senha?</a>
-                </span>
+                <ForgetPassword />
               </div>
 
               <Button
                 radius='md'
                 size='lg'
                 type="submit"
-                className="w-full font-semibold mb-4 bg-sulu-300 text-black py-2 hover:bg-sulu-300 transition duration-300"
+                className="w-full mt-2 font-semibold bg-sulu-300 text-black py-2 hover:bg-sulu-300 transition duration-300"
                 isLoading={loading}
 
               >
@@ -229,11 +226,11 @@ export default function Login() {
 
             </form>
           </div>
-         
+
         </div >
         <div className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center" style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/assets-screen-login.svg?alt=media&token=74ac6503-9f0e-4444-94f3-adb0e7e3ff6f')" }}></div>
       </div >
-      
+
     </>
   );
 };
