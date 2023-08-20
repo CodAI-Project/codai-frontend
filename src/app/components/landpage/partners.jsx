@@ -22,7 +22,7 @@ export default function Partners() {
                 <img
                     src="/fiap.svg"
                     alt=""
-                    className="w-40 h-auto"
+                    className="w-32 h-auto"
                 />
             </div>
 

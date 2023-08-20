@@ -3,12 +3,9 @@ import React, { useState } from 'react';
 import { Input, Button } from "@nextui-org/react";
 import Link from 'next/link';
 import { CodaiIcon } from '../../components/landpage/codaiIcon';
+import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { auth } from '../../firebase';
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-
-
 const provider = new GoogleAuthProvider();
-
 
 
 
@@ -65,9 +62,7 @@ export default function Login() {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
         const credential = GithubAuthProvider.credentialFromError(error);
         // ...
       });
@@ -148,7 +143,7 @@ export default function Login() {
                 size='lg'
                 type="submit"
                 onClick={handleGoogleSignIn}
-                className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300  transition duration-300"
+                className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
               >
                 Continue com Google
               </Button>
@@ -159,10 +154,11 @@ export default function Login() {
                 size='lg'
                 type="submit"
                 onClick={handleGithubSignIn}
-                className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300"
+                className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
               >
                 Continue com GitHub
               </Button>
+
             </div>
 
           </form>

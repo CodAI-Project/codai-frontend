@@ -1,10 +1,9 @@
 'use client'
-import React from "react";
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
+import React, { useState } from "react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarContent, NavbarItem, Button,Link } from "@nextui-org/react";
 import { CodaiIcon } from "./codaiIcon";
-import Link from "next/link";
 export default function NavbarCustom() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
     "Planos",
@@ -34,22 +33,7 @@ export default function NavbarCustom() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-2" justify="center" >
-        <NavbarItem>
-          {menuItems.map((item, index) => (
 
-            <Link
-              className="w-24 text-white"
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          ))
-          }
-
-        </NavbarItem>
-      </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
 
@@ -61,19 +45,6 @@ export default function NavbarCustom() {
 
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu isBlurred={true} className="">
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              className="w-full text-white"
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
     </Navbar >
   );
 }
