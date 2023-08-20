@@ -8,8 +8,9 @@ import { CodaiIcon } from '../../components/landpage/codaiIcon';
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase';
 import InputCustom from '../../ui/inputCustom';
-import { EyeFilledIcon } from './components/iconEye';
-import { EyeSlashFilledIcon } from './components/eyeSlashFilledIcon';
+import { EyeFilledIcon } from '../components/iconEye';
+import { useUser } from '@//authservice/userContext';
+import { EyeSlashFilledIcon } from '../components/eyeSlashFilledIcon';
 import { useRouter } from 'next/navigation'
 import showToast from '../../ui/toastCustom';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +21,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('Senha é obrigatória'),
 });
 
+const routeToGo = `/rota`
 
 export default function Login() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -29,13 +31,13 @@ export default function Login() {
   const [showLoginError, setShowLoginError] = useState(false);
 
 
-  // const { isLoggedIn } = useUser();
+  const { isLoggedIn } = useUser();
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     router.push('/rota'); // Redirecionar para a rota desejada
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push(routeToGo);
+    }
+  }, [isLoggedIn]);
 
 
   const formik = useFormik({
@@ -59,8 +61,8 @@ export default function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push('/rota');
-      showToast("Sucesso na autenticação", "sucess")
+      router.push(routeToGo);
+      showToast("Sucesso na autenticação", "success")
     } catch (error) {
       setShowLoginError(true);
       showToast("Falha na autenticação", "error")
@@ -74,7 +76,7 @@ export default function Login() {
       setLoading(true);
       await signInWithPopup(auth, provider);
       showToast("Sucesso na autenticação Google", "success")
-      router.push('/rota');
+      router.push(routeToGo);
     }
     catch (error) {
       showToast("Falha na autenticação Google", "error")
@@ -93,7 +95,7 @@ export default function Login() {
       await signInWithPopup(auth, providerGit)
       showToast("Sucesso na autenticação Github", "success")
     } catch (error) {
-      setShowLoginError(true);
+      console.log(error)
       showToast("Falha na autenticação Github", "error")
     } finally {
       setLoading(false);
@@ -117,7 +119,7 @@ export default function Login() {
                 <span>Faça login no CodAI para começar a criar a magia</span>
               </div>
             </div>
-            <form className="space-y-2" onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
               <InputCustom
                 radius='sm'
                 size='lg'
@@ -229,7 +231,7 @@ export default function Login() {
           </div>
          
         </div >
-        <div className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center" style={{ backgroundImage: "url('./bg-login.svg')" }}></div>
+        <div className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center" style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/assets-screen-login.svg?alt=media&token=74ac6503-9f0e-4444-94f3-adb0e7e3ff6f')" }}></div>
       </div >
       
     </>
