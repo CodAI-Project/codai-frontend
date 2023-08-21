@@ -10,6 +10,7 @@ const showToast = (message, type) => {
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
+    pauseOnFocusLoss: false,
     draggable: false,
     progress: undefined,
     type: type,

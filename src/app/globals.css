@@ -30,6 +30,13 @@
   box-shadow: 0 0 10px #6dfe6d1f, 0 0 20px #114b1130, 0 0 30px #2ad22a53, 0 0 40px #158d155e;
 }
 
+.link-button-login {
+  background-image: var(--primary-gradient-logo);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
 .abstract-bg {
   top: 0;
   left: 0;
@@ -131,8 +138,8 @@
 
 
 .mobile-hide-text {
-  @media (max-width: 640px) { 
-    font-size: 0; 
+  @media (max-width: 640px) {
+    font-size: 0;
   }
 }
 
@@ -148,4 +155,143 @@ body {
 
 
 
+grow::-webkit-scrollbar {
+  width: 8px;
+}
 
+.grow::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.grow::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Estilização do scroll para navegadores compatíveis com o novo padrão */
+.grow {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.grow::-webkit-scrollbar {
+  width: 8px;
+}
+
+.grow::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+.grow::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.grow::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Oculta o scroll em dispositivos móveis */
+@media (max-width: 767px) {
+  .grow {
+    -ms-overflow-style: none;
+    /* Para o IE e o Edge */
+    scrollbar-width: none;
+    /* Para navegadores compatíveis com o novo padrão */
+  }
+
+  .grow::-webkit-scrollbar {
+    display: none;
+    /* Para navegadores WebKit */
+  }
+}
+
+/* No seu arquivo CSS ou Tailwind config */
+@keyframes fadein {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.animate-fadein {
+  animation: fadein 1s;
+}
+
+.animate-fadeout {
+  animation: fadeout 1s;
+}
+
+label.custom-select {
+  position: relative;
+  display: inline-block;
+
+}
+
+.custom-select select {
+  display: inline-block;
+  padding: 13px;
+  margin: 0;
+  font: inherit;
+  height: 56px;
+  outline: none;
+  border-radius: 8px;
+  line-height: 1.5;
+  color: #9ca3af;
+  background: #0d0f10;
+  border: 0;
+  transition: color 0.3s;
+  /* Adicione uma transição de cor suave */
+}
+
+/* Estilo do select quando estiver em hover */
+.custom-select select:hover {
+  background: #373e42;
+}
+
+/* Estilo padrão do ícone :after */
+.custom-select:after {
+  content: "▼";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 56px;
+  bottom: 0;
+  font-size: 60%;
+  border-radius: 8px;
+  line-height: 50px;
+  padding: 0 15px;
+  color: #9ca3af;
+  background: #0d0f10;
+  pointer-events: none;
+  transition: color 0.3s;
+  /* Adicione uma transição de cor suave */
+}
+
+/* Estilo do ícone :after quando o select estiver em hover */
+.custom-select:hover:after {
+  color: #ffffff;
+  /* Mude a cor para branco */
+  background: #373e42;
+  /* Mude a cor de fundo para destacar */
+}
+
+.no-pointer-events .custom-select:after {
+  content: none;
+}

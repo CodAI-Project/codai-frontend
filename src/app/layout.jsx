@@ -18,7 +18,6 @@ export default function RootLayout({ children }) {
         <Providers>
           <UserProvider>
               {children}
-       
           </UserProvider>
         </Providers>
       </body>

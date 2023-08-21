@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('Senha é obrigatória'),
 });
 
-const routeToGo = `/rota`
+const routeToGo = `/editor`
 
 export default function Login() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -31,13 +31,14 @@ export default function Login() {
   const router = useRouter();
 
 
-  // const { isLoggedIn } = useUser();
+  const { isLoggedIn } = useUser();
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     router.push(routeToGo);
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push(routeToGo);
+      showToast("Usuario já autenticado", "success");
+    }
+  }, [isLoggedIn]);
 
 
   const formik = useFormik({
@@ -136,7 +137,7 @@ export default function Login() {
               />
 
               <InputCustom
-              className="mb-1"
+                className="mb-1"
                 radius='sm'
                 size='lg'
                 placeholder="Password"
@@ -220,7 +221,7 @@ export default function Login() {
 
               <div className=''>
 
-                <span className='text-base mt-5 text-gray-400'>Não tem conta? <GradientText className="font-bold" href="/register">Registrar</GradientText> </span>
+                <span className='text-sm mt-5 text-gray-400'>Não tem conta? <GradientText className="font-bold" href="/register">Registrar</GradientText> </span>
 
               </div>
 

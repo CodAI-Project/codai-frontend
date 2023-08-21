@@ -42,10 +42,11 @@ export default function Register() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.push("/rota");
+      router.push("/editor");
+      showToast("Usuario já autenticado", "success");
     }
   }, [isLoggedIn]);
-  
+
 
   const formik = useFormik({
     initialValues: {
@@ -86,8 +87,13 @@ export default function Register() {
       showToast("Registrado com sucesso", "success");
       router.push("/login")
     } catch (error) {
-      console.log(error)
-      showToast("Registro falhou", "error");
+
+      if (error.code == "auth/email-already-in-use") {
+        showToast("Usuario já existe", "warning");
+      } else {
+        showToast("Registro falhou", "error");
+      }
+
     } finally {
       setLoading(false);
     }
@@ -104,14 +110,14 @@ export default function Register() {
     <>
 
       <div className="flex h-screen overflow-hidden">
-        <div className="absolute top-1 left-2 p-4">
+        <div className="absolute top-1 left-2 p-4 flex-col">
           <CodaiIcon className="w-12 h-12" />
         </div>
         <div className="w-full lg:w-2/3 flex items-center justify-center">
           <div className="w-3/4">
 
-            <div className='mb-10'>
-              <h1 className='text-4xl	'>Conecte-se com o poder da velocidade e criatividade</h1>
+            <div className='lg:mb-10 mb-6'>
+              <h1 className='lg:text-4xl '>Conecte-se com o poder da velocidade e criatividade</h1>
             </div>
             <form className="" onSubmit={formik.handleSubmit}>
               <div className='flex-grow lg:gap-6 flex flex-col lg:flex-row items-center mx-auto'>
@@ -233,6 +239,10 @@ export default function Register() {
 
 
             </form>
+            <div className=''>
+              <span className='text-sm mt-5 text-gray-400'>Ir para o <GradientTextLogin href="/login" className="font-bold link-button-login">Login</GradientTextLogin> </span>
+            </div>
+
           </div>
 
         </div >
@@ -260,3 +270,21 @@ const GradientText = ({ children, className, href, ...restProps }) => {
     </span>
   );
 };
+
+
+const GradientTextLogin = ({ children, className, href, ...restProps }) => {
+  if (href) {
+    return (
+      <Link className={`link-button-login ${className}`} href={href} {...restProps}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <span className={`link-button-login  ${className}`} {...restProps}>
+      {children}
+    </span>
+  );
+};
+
