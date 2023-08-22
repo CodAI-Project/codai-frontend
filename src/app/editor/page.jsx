@@ -4,15 +4,14 @@ import Sidebar from './components/sidebar';
 import Topbar from './components/topSideBar';
 import EditorContent from './components/editorContent';
 import InputCodeAI from './components/inputCodeAI';
-import RouterProtected from '@//authservice/routerProtected';
-
+import ProtectedRoute from '@//admin/protectedPage';
 const Home = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
 
   return (
-    <RouterProtected>
+    <ProtectedRoute>
       <div className="flex max-h-screen overflow-hidden">
         <Sidebar setSelectedChat={setSelectedChat} />
         <div className="flex-1 flex flex-col ">
@@ -21,7 +20,7 @@ const Home = () => {
           <InputCodeAI />
         </div>
       </div>
-    </RouterProtected>
+    </ProtectedRoute>
 
   );
 };

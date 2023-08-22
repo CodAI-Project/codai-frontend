@@ -5,18 +5,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import { CodaiIcon } from '../../components/landpage/codaiIcon';
-import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../firebase';
 import InputCustom from '../../ui/inputCustom';
 import { EyeFilledIcon } from '../components/iconEye';
-import { useUser } from '@//authservice/userContext';
 import { EyeSlashFilledIcon } from '../components/eyeSlashFilledIcon';
 import { useRouter } from 'next/navigation'
 import showToast from '../../ui/toastCustom';
-import 'react-toastify/dist/ReactToastify.css';
 import ForgetPassword from '../components/forgetPassword';
-const provider = new GoogleAuthProvider();
-const providerGit = new GithubAuthProvider()
+import { signInWithGoogle, signInWithEmail, signInWithGithub } from '@//firebase/auth/signin';
+
+
 const validationSchema = Yup.object().shape({
   email: Yup.string().email('Digite um email válido').required('Email é obrigatório'),
   password: Yup.string().required('Senha é obrigatória'),
@@ -31,16 +28,6 @@ export default function Login() {
   const router = useRouter();
 
 
-  const { isLoggedIn } = useUser();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push(routeToGo);
-      showToast("Usuario já autenticado", "success");
-    }
-  }, [isLoggedIn]);
-
-
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -49,7 +36,7 @@ export default function Login() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await signInWithEmailPassword(values.email, values.password);
+       await signInWithEmailPassword(values.email, values.password);
 
       } catch (error) {
         console.error('Erro de autenticação:', error);
@@ -61,40 +48,66 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push(routeToGo);
-      showToast("Sucesso na autenticação", "success")
+      const {result, error } = await signInWithEmail(email, password);
+
+      console.log(result)
+
+      if (error) {
+        showToast(`${error.code === "auth/account-exists-with-different-credential"
+          ? "Usuario já tem esse email usando Google ou Github"
+          : "Credenciais inválidas"}`, "error")
+      } else {
+        showToast("Sucesso na autenticação", "success");
+        router.push(routeToGo);
+      }
+
     } catch (error) {
       showToast("Falha na autenticação", "error")
     } finally {
       setLoading(false);
     }
   };
-  const handleGoogleSignIn = async () => {
 
+
+
+  const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      await signInWithPopup(auth, provider);
-      showToast("Sucesso na autenticação Google", "success")
-      router.push(routeToGo);
-    }
-    catch (error) {
-      showToast("Falha na autenticação Google", "error")
-    }
-    finally {
+      const { error } = await signInWithGoogle();
+
+      if (error) {
+        showToast(`${error.code == 'auth/account-exists-with-different-credential'
+          ? 'Usuario já tem esse email usando Github ou Email'
+          : 'Falha na autenticação Github'}`, "error")
+      } else {
+        showToast("Sucesso na autenticação Google", "success");
+        router.push(routeToGo);
+      }
+    } catch (error) {
+      console.error("Erro ao autenticar Google:", error);
+      showToast("Erro ao autenticar Google", "error");
+    } finally {
       setLoading(false);
     }
   };
 
 
-
   const handleGithubSignIn = async () => {
     try {
       setLoading(true);
-      await signInWithPopup(auth, providerGit)
-      showToast("Sucesso na autenticação Github", "success")
+
+      const { error } = await signInWithGithub()
+
+      if (error) {
+        showToast(`${error.code == 'auth/account-exists-with-different-credential'
+          ? 'Usuario já tem esse email usando Google ou Email'
+          : 'Falha na autenticação Github'}`, "error")
+      } else {
+        showToast("Sucesso na autenticação Github", "success")
+        router.push(routeToGo);
+      }
+
     } catch (error) {
-      console.log(error)
       showToast("Falha na autenticação Github", "error")
     } finally {
       setLoading(false);
@@ -241,14 +254,14 @@ export default function Login() {
 const GradientText = ({ children, className, href, ...restProps }) => {
   if (href) {
     return (
-      <Link className={`gradient-text ${className}`} href={href} {...restProps}>
+      <Link className={`gradient-text ${className} `} href={href} {...restProps}>
         {children}
       </Link>
     );
   }
 
   return (
-    <span className={`gradient-text ${className}`} {...restProps}>
+    <span className={`gradient-text ${className} `} {...restProps}>
       {children}
     </span>
   );

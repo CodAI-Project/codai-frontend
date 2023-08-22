@@ -5,15 +5,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import { CodaiIcon } from '../../components/landpage/codaiIcon';
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from '../../firebase';
 import InputCustom from '../../ui/inputCustom';
 import { EyeFilledIcon } from '../components/iconEye';
 import { EyeSlashFilledIcon } from '../components/eyeSlashFilledIcon';
 import { useRouter } from 'next/navigation'
 import showToast from '../../ui/toastCustom';
 import 'react-toastify/dist/ReactToastify.css';
-import { useUser } from '@//authservice/userContext';
+
+import signUp from '@//firebase/auth/signup';
+
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('Primeiro nome obrigatório'),
@@ -38,14 +38,14 @@ export default function Register() {
   const [showLoginError, setShowLoginError] = useState(false);
 
 
-  const { isLoggedIn } = useUser();
+  // const { isLoggedIn } = useUser();
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/editor");
-      showToast("Usuario já autenticado", "success");
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     router.push("/editor");
+  //     showToast("Usuario já autenticado", "success");
+  //   }
+  // }, [isLoggedIn]);
 
 
   const formik = useFormik({
@@ -72,37 +72,21 @@ export default function Register() {
     setLoading(true);
     try {
 
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await new Promise((resolve, reject) => {
-        updateDisplayName(userCredential.user, `${firstName} ${lastName}`)
-          .then(() => {
-            console.log("displayName atualizado com sucesso");
-            resolve();
-          })
-          .catch((error) => {
-            console.error("Erro ao atualizar displayName:", error);
-            reject(error);
-          });
-      });
-      showToast("Registrado com sucesso", "success");
-      router.push("/login")
-    } catch (error) {
+      const { error } = await signUp(email, password, firstName, lastName);
 
-      if (error.code == "auth/email-already-in-use") {
-        showToast("Usuario já existe", "warning");
+      if (error) {
+        showToast(`${error.code == "auth/email-already-in-use" ? "Email já registrado" : "Erro ao registrar"}`, "error");
       } else {
-        showToast("Registro falhou", "error");
+        showToast("Registrado com sucesso", "success");
+        router.push("/login")
       }
 
+
+    } catch (error) {
+      showToast("Ops, ocorreu algum erro, tente novamente", "error");
     } finally {
       setLoading(false);
     }
-  };
-
-  const updateDisplayName = async (user, displayName) => {
-    await updateProfile(user, {
-      displayName: displayName,
-    });
   };
 
 

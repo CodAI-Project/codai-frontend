@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { auth } from '../../firebase';
 import { sendPasswordResetEmail } from "firebase/auth";
 import showToast from '../../ui/toastCustom';
 import InputCustom from "../../ui/inputCustom";
+import forgetPassword from "@//firebase/auth/forget";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Digite um email válido').required('Email é obrigatório'),
@@ -33,25 +33,28 @@ export default function ForgetPassword() {
         },
     });
 
- 
+
     const resetPassword = async (email) => {
         setLoading(true);
-        console.log(email);
         try {
-            await sendPasswordResetEmail(auth, email);
-            showToast("Check seu email", "success");
-            formik.resetForm()
-            onOpenChange()
-        } catch (error) {
-            console.log(error);
+            const { error } = await forgetPassword(email);
 
-            if (error.code === "auth/user-not-found") {
-                showToast("Email não encontrado", "error");
-            } else if (error.code === "auth/invalid-email") {
-                showToast("Email inválido", "error");
-            } else {
-                showToast("Erro ao redefinir senha", "error");
+            if (error) {
+                if (error.code === "auth/user-not-found") {
+                    showToast("Email não encontrado", "error");
+                } else if (error.code === "auth/invalid-email") {
+                    showToast("Email inválido", "error");
+                } else {
+                    showToast("Erro ao redefinir senha", "error");
+                }
             }
+            else {
+                showToast("Check seu email", "success");
+                formik.resetForm()
+                onOpenChange()
+            }
+
+        } catch (error) {
         } finally {
             setLoading(false);
         }

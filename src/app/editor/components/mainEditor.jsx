@@ -24,7 +24,7 @@ export default function MainEditor() {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setIsBulbOn((prevIsBulbOn) => !prevIsBulbOn);
-        }, 3000); // Change this interval time as needed
+        }, 3000);
 
         return () => {
             clearInterval(intervalId);
@@ -35,7 +35,7 @@ export default function MainEditor() {
         if (isBulbOn) {
             const repeatIntervalId = setInterval(() => {
                 setIsBulbOn(false);
-            }, 500); // Time between each repeat, adjust as needed
+            }, 500); 
 
             return () => {
                 clearInterval(repeatIntervalId);

@@ -2,8 +2,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Providers } from "./providers";
-import { UserProvider } from '../authservice/userContext';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContextProvider } from '../authservice/AuthContext';
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -16,9 +17,9 @@ export default function RootLayout({ children }) {
     <html lang="pt-br" className='bg-transparent dark'>
       <body className={inter.className}>
         <Providers>
-          <UserProvider>
-              {children}
-          </UserProvider>
+          <AuthContextProvider>
+            {children}
+          </AuthContextProvider>
         </Providers>
       </body>
     </html>

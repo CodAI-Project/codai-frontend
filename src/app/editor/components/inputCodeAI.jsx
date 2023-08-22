@@ -43,8 +43,6 @@ const InputCodeAI = () => {
         <Formik
             initialValues={{ message: '', selectValue: '' }}
             onSubmit={(values, { resetForm }) => {
-                console.log('Message:', values.message);
-                console.log('Select Value:', currentSelectValue);
 
                 if (currentSelectValue == '' || values.message.trim() === '') {
                     setIsFormInvalid(true);
