@@ -17,14 +17,6 @@ export default function Sidebar({ setSelectedChat }) {
         {
             title: 'Tela de login',
             icon: AiFillMessage,
-        },
-        {
-            title: 'Teste teste',
-            icon: AiFillMessage,
-        },
-        {
-            title: 'Teste teste',
-            icon: AiFillMessage,
         }
     ]);
 

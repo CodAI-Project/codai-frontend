@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Loading from "../app/loading";
 
-export default function RotaProtegida({ children }) {
+export default function RouterProtected({ children }) {
   const user = useUser();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -12,20 +12,19 @@ export default function RotaProtegida({ children }) {
   useEffect(() => {
     if (user !== null) {
       setIsLoading(false);
-      if (!user) {
-        // Redireciona para a página de login se o usuário não estiver autenticado
-        // Pode ser substituído pelo componente de Login ou uma página de login completa
+      if (!user.isLoggedIn) {
         router.push('/login');
       }
     }
+
   }, [user, router]);
 
-  if (isLoading) {
+  if (isLoading && !user.isLoggedIn) {
     // Renderiza um indicador de carregamento enquanto a autenticação está sendo verificada
     return <Loading/>
   }
 
-  if (user) {
+  if (user && user.isLoggedIn) {
     // Renderiza o conteúdo da rota protegida se o usuário estiver autenticado
     return <div>{children}</div>;
   } else {

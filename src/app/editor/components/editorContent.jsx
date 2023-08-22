@@ -18,9 +18,7 @@ export default function EditorContent({ selectedChatContent }) {
       ) : (
 
         <div className='h-full'>
-
           <MainEditor />
-
         </div>
 
       )}
