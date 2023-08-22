@@ -9,8 +9,7 @@ const Home = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  console.log(selectedChat)
-
+ 
   return (
     <div className="flex max-h-screen overflow-hidden">
       <Sidebar setSelectedChat={setSelectedChat} />

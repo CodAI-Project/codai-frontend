@@ -3,20 +3,19 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Textarea, Button } from "@nextui-org/react";
 import { LuSend } from 'react-icons/lu'
 import SelectCustom from './selectCustom';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field } from 'formik'
+import showToast from '../../ui/toastCustom';;
 
 const options = [
-    { value: "sushi", label: "Sushi" },
-    { value: "blueCheese", label: "Blue cheese with crackers" },
-    { value: "steak", label: "Steak" },
-    { value: "other", label: "Other" }
+    { value: null, label: "Selecione o framework" },
 ];
-
 const InputCodeAI = () => {
     const [isFocused, setIsFocused] = useState(false);
     const [isTextareaFilled, setIsTextareaFilled] = useState(false);
     const textareaRef = useRef(null);
     const [currentSelectValue, setCurrentSelectValue] = useState("");
+    const [isFormInvalid, setIsFormInvalid] = useState(false);
+    
 
     useEffect(() => {
         const textarea = textareaRef.current;
@@ -46,16 +45,26 @@ const InputCodeAI = () => {
             onSubmit={(values, { resetForm }) => {
                 console.log('Message:', values.message);
                 console.log('Select Value:', currentSelectValue);
-                setIsTextareaFilled(false)
-                resetForm();
+
+                if (currentSelectValue == '' || values.message.trim() === '') {
+                    setIsFormInvalid(true);
+                    showToast("Selecione o framework desejado", "error")
+                } else {
+                    setIsFormInvalid(false);
+
+                    setIsTextareaFilled(false)
+                    resetForm();
+                }
             }}
         >
             <Form>
                 <div className={`relative  transition-colors duration-300 `}>
                     <div className="flex items-center justify-between gap-6 p-2 px-4">
                         <div className="flex items-center space-x-2">
-                            <Field name="selectValue">
-                                {({ field }) => <SelectCustom options={options} onSelectChange={handleSelectChange} {...field} />}
+                            <Field name="selectValue" className={`${isFormInvalid ? "" : 'bg-red-600'}`}>
+                                {({ field }) => (
+                                    <SelectCustom options={options} onSelectChange={handleSelectChange} isValid={!isFormInvalid} {...field} />
+                                )}
                             </Field>
                         </div>
                         <div className="relative flex h-full flex-1 items-stretch md:flex-col">

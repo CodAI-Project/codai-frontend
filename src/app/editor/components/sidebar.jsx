@@ -103,7 +103,7 @@ export default function Sidebar({ setSelectedChat }) {
                                     setData(prevData => [
                                         ...prevData,
                                         {
-                                            title: 'New Template',
+                                            title: '',
                                             icon: AiFillMessage,
                                         }
                                     ])
@@ -119,10 +119,10 @@ export default function Sidebar({ setSelectedChat }) {
                         <div className='grow items-center overflow-y-auto' style={{ maxHeight: active ? 'calc(82vh - 100px)' : 'calc(74vh - 48px)' }}>
                             {data.slice().reverse().map((item, index2) => (
                                 <div key={index2} className='flex px-4 py-1 justify-center cursor-pointer'>
-                                    <Tooltip placement={!active ? 'right-start' : ''} content={item.title}>
-                                        <Button onClick={() => setSelectedChat(item)} className={`w-full ${active ? 'justify-start' : ''} `} isIconOnly={!active} variant='light' color='default'>
+                                    <Tooltip placement={!active ? 'right-start' : ''} content={item.title || "Novo template"}>
+                                        <Button onClick={() => setSelectedChat(item || false)} className={`w-full ${active ? 'justify-start' : ''} `} isIconOnly={!active} variant='light' color='default'>
                                             <item.icon className='text-lg text-sulu-300' />
-                                            <motion.p animate={controlText} className='ml-4 text-sm font-bold text-gray-300 overflow-hidden overflow-ellipsis whitespace-nowrap max-w-[160px]' > {item.title}</motion.p>
+                                            <motion.p animate={controlText} className='ml-4 text-sm font-bold text-gray-300 overflow-hidden overflow-ellipsis whitespace-nowrap max-w-[160px]' > {item.title || 'Novo template'}</motion.p>
                                         </Button>
                                     </Tooltip>
                                 </div>
