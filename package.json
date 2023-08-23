@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy:dev": "firebase deploy --only hosting:codai --project dev"
+    "deploy:dev": "env-cmd -f .env npm run build && firebase deploy --only hosting:codai -P dev",
+    "deploy:prod": "env-cmd -f .env.production npm run build && firebase deploy --only hosting:codai -P prod"
   },
   "dependencies": {
     "@nextui-org/react": "^2.0.24",
     "@stackblitz/sdk": "^1.9.0",
     "autoprefixer": "10.4.15",
+    "cross-env": "^7.0.3",
     "encoding": "^0.1.13",
+    "eventsource": "^2.0.2",
     "firebase": "^10.2.0",
     "formik": "^2.4.3",
     "framer-motion": "^10.16.0",
@@ -28,5 +31,8 @@
     "styled-components": "^6.0.7",
     "tailwindcss": "3.3.3",
     "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
   }
 }

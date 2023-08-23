@@ -10,19 +10,24 @@ function SelectCustom({ options, onSelectChange, isValid }) {
 
 
   useEffect(() => {
-    setIsInvalid(!isValid); 
+    setIsInvalid(!isValid);
     if (!isValid && !hasBounced) {
       setHasBounced(true);
       setTimeout(() => {
         setHasBounced(false);
-      }, 3000); 
+      }, 3000);
     }
   }, [isValid]);
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
-    setSelectedValue(selectedValue);
-    onSelectChange(selectedValue); 
+    if (selectedValue === "Selecione o framework") {
+      setSelectedValue('');
+    } else {
+      setSelectedValue(selectedValue);
+      onSelectChange(selectedValue);
+    }
+
   };
 
   const selectClasses = `custom-select ${isInvalid && hasBounced ? 'animate-bounce' : ''}`;
@@ -30,9 +35,12 @@ function SelectCustom({ options, onSelectChange, isValid }) {
   return (
     <label className={selectClasses}>
       <select value={selectedValue} onChange={handleChange}>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+        <option value={null}>
+          Selecione o framework
+        </option>
+        {options.map((option, index) => (
+          <option key={index} value={option.template}>
+            {option.title}
           </option>
         ))}
       </select>

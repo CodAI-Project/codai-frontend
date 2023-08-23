@@ -5,22 +5,26 @@ import Topbar from './components/topSideBar';
 import EditorContent from './components/editorContent';
 import InputCodeAI from './components/inputCodeAI';
 import ProtectedRoute from '@//admin/protectedPage';
+import { ChatProvider } from './context/chatContext';
+import { AuthContextProvider } from '@//authservice/AuthContext';
 const Home = () => {
-  const [selectedChat, setSelectedChat] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-
-
   return (
-    <ProtectedRoute>
-      <div className="flex max-h-screen overflow-hidden">
-        <Sidebar setSelectedChat={setSelectedChat} />
-        <div className="flex-1 flex flex-col ">
-          <Topbar title={selectedChat ? selectedChat.title : false} sidebarOpen={sidebarOpen} />
-          <EditorContent selectedChatContent={selectedChat} sidebarOpen={sidebarOpen} />
-          <InputCodeAI />
-        </div>
-      </div>
-    </ProtectedRoute>
+
+    <AuthContextProvider>
+      <ProtectedRoute>
+        <ChatProvider>
+          <div className="flex max-h-screen overflow-hidden">
+            <Sidebar />
+            <div className="flex-1 flex flex-col ">
+              <Topbar sidebarOpen={sidebarOpen} />
+              <EditorContent sidebarOpen={sidebarOpen} />
+              <InputCodeAI />
+            </div>
+          </div>
+        </ChatProvider>
+      </ProtectedRoute>
+    </AuthContextProvider>
 
   );
 };

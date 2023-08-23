@@ -1,21 +1,87 @@
 'use client'
 import React, { useState, useRef, useEffect } from 'react';
-import { Textarea, Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { LuSend } from 'react-icons/lu'
 import SelectCustom from './selectCustom';
 import { Formik, Form, Field } from 'formik'
 import showToast from '../../ui/toastCustom';;
+import { useAuthContext } from '@//authservice/AuthContext';
+import { getAllFrameworkOptions, postCodeToOpenAI, postOpenAI, patchChatTitle } from '@//services/api';
+import { useChat } from '../context/chatContext'
 
-const options = [
-    { value: null, label: "Selecione o framework" },
-];
+
+
 const InputCodeAI = () => {
+
+
+    const { user } = useAuthContext()
+    const { selectedChat, fetchChats, setContentEditor, setSelectedChat } = useChat();
     const [isFocused, setIsFocused] = useState(false);
     const [isTextareaFilled, setIsTextareaFilled] = useState(false);
     const textareaRef = useRef(null);
     const [currentSelectValue, setCurrentSelectValue] = useState("");
     const [isFormInvalid, setIsFormInvalid] = useState(false);
-    
+    const [loading, setLoading] = useState(false)
+    const [frameworkOptions, setFrameworkOptions] = useState([]);
+
+
+    useEffect(() => {
+        async function fetchFrameworkOptions() {
+            try {
+                const response = await getAllFrameworkOptions(user);
+                if (response) {
+                    setFrameworkOptions(response.data);
+                }
+            } catch (error) {
+                console.error("Error fetching framework options:", error);
+            }
+        }
+        fetchFrameworkOptions();
+    }, []);
+
+    const askTemplate = async (ask, template) => {
+        setLoading(true);
+        const request = {
+            ask: ask,
+            template: template,
+            chatId: selectedChat?.chatId || null,
+            userId: user.uid,
+            user: user
+        };
+
+        try {
+            const response = await postCodeToOpenAI(request);
+            if (response) {
+
+                setContentEditor(response.data.chat)
+                if (!response.data.chat.title) {
+                    await setTitleNull(request.ask, request.userId, response.data.chat.id)
+                    await fetchChats()
+                }
+
+            }
+        } catch (error) {
+            console.error("Error fetching framework options:", error);
+        } finally {
+            setLoading(false);
+        }
+
+    };
+
+
+
+    const setTitleNull = async (ask, userId, chatId) => {
+        try {
+            const response = await postOpenAI(ask)
+
+            const titleUpdated = await patchChatTitle(chatId, response.choices[0].message.content, userId, user)
+
+            return titleUpdated
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
     useEffect(() => {
         const textarea = textareaRef.current;
@@ -43,13 +109,12 @@ const InputCodeAI = () => {
         <Formik
             initialValues={{ message: '', selectValue: '' }}
             onSubmit={(values, { resetForm }) => {
-
                 if (currentSelectValue == '' || values.message.trim() === '') {
                     setIsFormInvalid(true);
                     showToast("Selecione o framework desejado", "error")
                 } else {
                     setIsFormInvalid(false);
-
+                    askTemplate(values.message, currentSelectValue)
                     setIsTextareaFilled(false)
                     resetForm();
                 }
@@ -61,7 +126,7 @@ const InputCodeAI = () => {
                         <div className="flex items-center space-x-2">
                             <Field name="selectValue" className={`${isFormInvalid ? "" : 'bg-red-600'}`}>
                                 {({ field }) => (
-                                    <SelectCustom options={options} onSelectChange={handleSelectChange} isValid={!isFormInvalid} {...field} />
+                                    <SelectCustom options={frameworkOptions} onSelectChange={handleSelectChange} isValid={!isFormInvalid} {...field} />
                                 )}
                             </Field>
                         </div>
@@ -86,9 +151,9 @@ const InputCodeAI = () => {
                         </div>
                         <Button
                             className={` disabled:opacity-40`}
-                            style={{}}
                             isIconOnly
                             isDisabled={!isTextareaFilled}
+                            isLoading={loading}
                             type="submit"
                         >
                             <LuSend />

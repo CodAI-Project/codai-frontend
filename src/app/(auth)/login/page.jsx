@@ -50,8 +50,6 @@ export default function Login() {
     try {
       const {result, error } = await signInWithEmail(email, password);
 
-      console.log(result)
-
       if (error) {
         showToast(`${error.code === "auth/account-exists-with-different-credential"
           ? "Usuario já tem esse email usando Google ou Github"

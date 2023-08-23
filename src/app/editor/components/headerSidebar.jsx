@@ -3,9 +3,12 @@
 import React, { useState } from 'react'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Avatar, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, RadioGroup, Radio } from '@nextui-org/react'
+import { useAuthContext } from '@//authservice/AuthContext'
 
 
 export default function HeaderSidebar({ active }) {
+    const { user, handleLogout } = useAuthContext()
+
 
 
     return (
@@ -13,19 +16,19 @@ export default function HeaderSidebar({ active }) {
             <div className={`${active ? '' : ''}`}>
                 {!active ? (
                     <DropdownContent color="default" variant="light" active={active}>
-                        <Avatar isBordered src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                        <Avatar showFallback isBordered src={user?.photoURL} />
                     </DropdownContent>
                 ) :
                     (
-                        <Avatar isBordered src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                        <Avatar showFallback isBordered src={user?.photoURL} />
                     )}
             </div>
             <div className="flex flex-row gap-3 items-center justify-center">
                 <span className={`text-white overflow-hidden overflow-ellipsis whitespace-nowrap max-w-[160px] ${active ? '' : 'hidden'}`}>
-                    Luan Reis
+                    {user?.displayName}
                 </span>
                 <div className="flex flex-wrap gap-4">
-                    <DropdownContent color="default" variant="light" active={active}>
+                    <DropdownContent handleLogout={handleLogout} color="default" variant="light" active={active} >
                         <Button
                             className={active ? '' : 'hidden'}
                             isIconOnly
@@ -40,14 +43,14 @@ export default function HeaderSidebar({ active }) {
     )
 }
 
-const DropdownContent = ({ variant, color, children }) => (
+const DropdownContent = ({ variant, color, children, handleLogout }) => (
     <Dropdown>
         <DropdownTrigger className='cursor-pointer'>
             {children}
         </DropdownTrigger>
         <DropdownMenu aria-label="Dropdown Variants" color={color} variant={variant}>
             <DropdownItem key="edit">Ver informações</DropdownItem>
-            <DropdownItem key="delete" className="text-danger" color="danger">
+            <DropdownItem onClick={handleLogout} key="delete" className="text-danger" color="danger">
                 Sair
             </DropdownItem>
         </DropdownMenu>

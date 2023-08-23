@@ -1,4 +1,4 @@
-
+'use client'
 
 import { useState, useEffect } from 'react'
 import { AiFillMessage, } from 'react-icons/ai'
@@ -7,27 +7,39 @@ import { TbLayoutSidebarLeftExpand, TbLayoutSidebarRightExpand } from 'react-ico
 import { motion, useAnimation } from 'framer-motion'
 import HeaderSidebar from './headerSidebar'
 import { Button, Tooltip, Divider } from "@nextui-org/react";
+import { useChat } from '../context/chatContext'
 
-
-
-export default function Sidebar({ setSelectedChat }) {
-
-
-    const [data, setData] = useState([
-        {
-            title: 'Tela de login',
-            icon: AiFillMessage,
-        }
-    ]);
-
-
-
-
-
+export default function Sidebar() {
+    const { selectedChat, setSelectedChat, chats, setChats } = useChat();
     const [active, setActive] = useState(false)
     const controls = useAnimation()
     const controlText = useAnimation()
     const controlTitleText = useAnimation()
+
+    const createNewChat = () => {
+        if (selectedChat && selectedChat?.title !== '' && chats.length != 0 && !chats[0].title == '') {
+
+            //Se habilitar, ele cria um novo template e mostra na listagem do chat.
+            // let addFirst = chats;
+            // addFirst.unshift({
+            //     id: '',
+            //     title: '',
+            //     lastModified: ''
+            // })
+            // setChats(addFirst);  
+
+            setSelectedChat(null)
+        }
+
+        if (chats[0].title == '') {
+            setSelectedChat(null)
+        }
+    };
+
+    const handleChatSelection = (chat) => {
+        console.log("chat", chat)
+        setSelectedChat(chat);
+    };
 
     const showMore = () => {
         controls.start({
@@ -45,7 +57,7 @@ export default function Sidebar({ setSelectedChat }) {
         })
 
         setActive(true)
-    }
+    };
 
     const showLess = () => {
         controls.start({
@@ -66,13 +78,9 @@ export default function Sidebar({ setSelectedChat }) {
 
     }
 
-
-
     useEffect(() => {
         showMore()
     }, [])
-
-
 
     return (
         <div className=' flex-grow-0 teste'>
@@ -90,16 +98,8 @@ export default function Sidebar({ setSelectedChat }) {
                         <Divider className="mt-6 mb-2" />
 
                         <div className='flex bg-transparent px-4 py-1 justify-center cursor-pointer'>
-                            <Tooltip placement={!active ? 'right-start' : ''} content="Gerar novo template">
-                                <Button onClick={() =>
-                                    setData(prevData => [
-                                        ...prevData,
-                                        {
-                                            title: '',
-                                            icon: AiFillMessage,
-                                        }
-                                    ])
-                                } className={`w-full ${active ? 'justify-start' : ''} `} isIconOnly={!active} variant='light' color='default'>
+                            <Tooltip placement={'right-end'} content="Gerar novo template">
+                                <Button onClick={createNewChat} className={`w-full ${active ? 'justify-start' : ''} `} isIconOnly={!active} variant='light' color='default'>
                                     <div className="flex items-center">
                                         <RiAddCircleLine className={`text-lg ${active ? 'text-xl' : ''} text-gray-500`} />
                                         <motion.p animate={controlText} className='ml-4 text-sm font-bold text-gray-400' >Gerar novo template</motion.p>
@@ -109,18 +109,18 @@ export default function Sidebar({ setSelectedChat }) {
                         </div>
 
                         <div className='grow items-center overflow-y-auto' style={{ maxHeight: active ? 'calc(82vh - 100px)' : 'calc(74vh - 48px)' }}>
-                            {data.slice().reverse().map((item, index2) => (
+                            {chats.map((item, index2) => (
                                 <div key={index2} className='flex px-4 py-1 justify-center cursor-pointer'>
-                                    <Tooltip placement={!active ? 'right-start' : ''} content={item.title || "Novo template"}>
-                                        <Button onClick={() => setSelectedChat(item || false)} className={`w-full ${active ? 'justify-start' : ''} `} isIconOnly={!active} variant='light' color='default'>
-                                            <item.icon className='text-lg text-sulu-300' />
+                                    <Tooltip placement={'right-end'} content={item.title || "Novo template"}>
+                                        <Button onClick={() => handleChatSelection(item)} className={`w-full ${active ? 'justify-start' : ''} `} isIconOnly={!active} variant='light' color='default'>
+                                            <AiFillMessage className='text-lg text-sulu-300' />
                                             <motion.p animate={controlText} className='ml-4 text-sm font-bold text-gray-300 overflow-hidden overflow-ellipsis whitespace-nowrap max-w-[160px]' > {item.title || 'Novo template'}</motion.p>
                                         </Button>
                                     </Tooltip>
                                 </div>
                             ))}
-
                         </div>
+
                         <div className="absolute bottom-5 left-0 right-0 p-4 flex justify-center items-center">
                             {active ? (
                                 <TbLayoutSidebarRightExpand onClick={showLess} className='text-2xl text-gray-400 cursor-pointer' />
@@ -128,6 +128,7 @@ export default function Sidebar({ setSelectedChat }) {
                                 <TbLayoutSidebarLeftExpand onClick={showMore} className='text-2xl text-gray-400 cursor-pointer' />
                             )}
                         </div>
+
                     </div>
                 </motion.div>
             </div>
