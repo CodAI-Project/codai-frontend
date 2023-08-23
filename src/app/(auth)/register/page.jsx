@@ -6,8 +6,8 @@ import * as Yup from 'yup';
 import Link from 'next/link';
 import { CodaiIcon } from '../../components/landpage/codaiIcon';
 import InputCustom from '../../ui/inputCustom';
-import { EyeFilledIcon } from '../components/iconEye';
-import { EyeSlashFilledIcon } from '../components/eyeSlashFilledIcon';
+import { EyeFilledIcon } from '../login/components/iconEye';
+import { EyeSlashFilledIcon } from '../login/components/eyeSlashFilledIcon';
 import { useRouter } from 'next/navigation'
 import showToast from '../../ui/toastCustom';
 import 'react-toastify/dist/ReactToastify.css';

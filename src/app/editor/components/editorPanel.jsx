@@ -1,55 +1,115 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import sdk from '@stackblitz/sdk';
-import { useChat } from '../context/chatContext';
+"use client";
 
-export default function EditorPanel({  parentRef }) {
-    const [embedHeight, setEmbedHeight] = useState(parentRef.current?.offsetHeight);
-    const { contentEditor, setContentEditor, selectedChat } = useChat();
-    let vmInstance = null;
+import React, { useState, useEffect, useRef } from "react";
+import sdk from "@stackblitz/sdk";
+import { useChat } from "../context/chatContext";
+import { useAuthContext } from "@//authservice/AuthContext";
+import { getChatById } from "@//services/api";
 
-    
-    useEffect(() => {
-        setEmbedHeight(parentRef.current?.offsetHeight);
+export default function EditorPanel({ loading, setLoading }) {
+  const { user } = useAuthContext();
+  const { selectedChat, contentEditor } = useChat();
 
-        const handleResize = () => {
-            setEmbedHeight(parentRef.current?.offsetHeight);
-        };
+  const [projectInitialized, setProjectInitialized] = useState(false);
+  const [projectFiles, setProjectFiles] = useState({});
+  const [currentChatId, setCurrentChatId] = useState("");
+  const [vmSave, setVmSave] = useState();
+  const iframeRef = useRef(null);
 
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-         
-        };
-    }, [parentRef]);
+  useEffect(() => {
+    if (selectedChat && selectedChat.id && selectedChat.id !== currentChatId) {
+      setLoading(true);
+      setCurrentChatId(selectedChat.id);
+      initializeProject();
+    }
+  }, [selectedChat, currentChatId]);
 
-    useEffect(() => {
-        if (!vmInstance) {
-            async function createProject() {
-                const project = objeto;
-                const vm = await sdk.embedProject('stackblitz-embed', project, {
-                    height: embedHeight,
-                    width: '100%',
-                    hideNavigation: false,
-                });
+  useEffect(() => {
+    console.log("contentEditor", contentEditor);
+    if (projectInitialized && contentEditor.history?.slice(-1)) {
+      console.log("cai aqui?", contentEditor);
+      applyChangesToEditor();
+    }
+  }, [contentEditor, projectInitialized]);
 
-                await vm.editor.setTheme('dark');
-                return vm;
-            }
+  const initializeProject = async () => {
+    // Simulate API call to fetch project data
+    const response = await getChatById(selectedChat.id, user);
 
-            createProject().then(vm => {
-                vmInstance = vm;
-            });
-        }
+    const projectData = JSON.parse(response.data.history.slice(-1)[0].content);
 
-        return () => {
-      
-        };
-    }, [embedHeight]);
+    console.log(response.data.history.slice(-1)[0].content);
 
-    return selectedChat ? (
-        <div className="w-full n">
-            <div id="stackblitz-embed" />
-        </div>
-    ) : null;
+    // Create and embed the project
+    // const vm = await sdk.embedProject("stackblitz-iframe", projectData, {
+    //   height: "100%",
+    //   width: "100%",
+    //   hideNavigation: true,
+    // });
+
+    const iframe = document.getElementById("stackblitz-iframe");
+    const vm = await sdk.embedProject(iframe, projectData);
+
+    setVmSave(vm);
+
+    setLoading(false);
+
+    setProjectFiles(projectData);
+    setProjectInitialized(true);
+
+    await vm.editor.setTheme("dark");
+  };
+  const applyChangesToEditor = async () => {
+    const iframe = document.getElementById("stackblitz-iframe");
+    const vm = await sdk.connect(iframe);
+
+    console.log("vm", vm);
+
+    const diff = computeFileDiff(
+      JSON.parse(
+        contentEditor.history[contentEditor.history.length - 1].content
+      ).files,
+      projectFiles.files
+    );
+
+
+    await vm.applyFsDiff({
+      create: diff.create,
+      destroy: [],
+    });
+  };
+
+  const computeFileDiff = (newFiles, existingFiles) => {
+    const diff = {
+      create: {},
+      destroy: [],
+    };
+    console.log("newFiles", newFiles);
+    console.log("existingFiles", existingFiles);
+
+    for (const file in newFiles) {
+      if (!existingFiles[file] || existingFiles[file] !== newFiles[file]) {
+        diff.create[file] = newFiles[file];
+      }
+    }
+
+    for (const file in existingFiles) {
+      if (!newFiles[file]) {
+        diff.destroy.push(file);
+      }
+    }
+
+    return diff;
+  };
+
+  return (
+    <div className="responsive-iframe">
+      <iframe
+        className="responsive-iframe"
+        ref={iframeRef}
+        id="stackblitz-iframe"
+        title="CodAI Editor"
+      />
+    </div>
+  );
 }

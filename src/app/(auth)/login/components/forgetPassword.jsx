@@ -4,8 +4,8 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { sendPasswordResetEmail } from "firebase/auth";
-import showToast from '../../ui/toastCustom';
-import InputCustom from "../../ui/inputCustom";
+import showToast from '../../../ui/toastCustom';
+import InputCustom from "../../../ui/inputCustom";
 import forgetPassword from "@//firebase/auth/forget";
 
 const validationSchema = Yup.object().shape({

@@ -8,8 +8,7 @@ export function ChatProvider({ children }) {
     const [selectedChat, setSelectedChat] = useState(null);
     const [chats, setChats] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [contentEditor, setContentEditor] = useState()
-
+    const [contentEditor, setContentEditor] = useState([])
 
 
     useEffect(() => {
@@ -41,14 +40,20 @@ export function ChatProvider({ children }) {
         }
     }
 
+    async function getChatById(id) {
+        try {
+            const response = await getChatById(id, user);
+            
+            console.log(response)
+            
+        } catch (error) {
+            console.error('Error fetching chats:', error);
+        }
+    }
 
     return (
-        <ChatContext.Provider value={{ selectedChat, setSelectedChat, chats, setChats, fetchChats, contentEditor, setContentEditor }}>
-            {loading ? (
-                <div>Carregando chats...</div>
-            ) : (
-                children
-            )}
+        <ChatContext.Provider value={{ selectedChat, setSelectedChat, chats, setChats, fetchChats, contentEditor, setContentEditor, getChatById }}>
+            {children}
         </ChatContext.Provider>
     );
 }

@@ -6,11 +6,11 @@ import * as Yup from 'yup';
 import Link from 'next/link';
 import { CodaiIcon } from '../../components/landpage/codaiIcon';
 import InputCustom from '../../ui/inputCustom';
-import { EyeFilledIcon } from '../components/iconEye';
-import { EyeSlashFilledIcon } from '../components/eyeSlashFilledIcon';
+import { EyeFilledIcon } from './components/iconEye';
+import { EyeSlashFilledIcon } from './components/eyeSlashFilledIcon';
 import { useRouter } from 'next/navigation'
 import showToast from '../../ui/toastCustom';
-import ForgetPassword from '../components/forgetPassword';
+import ForgetPassword from './components/forgetPassword';
 import { signInWithGoogle, signInWithEmail, signInWithGithub } from '@//firebase/auth/signin';
 
 

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Sidebar from './components/sidebar';
 import Topbar from './components/topSideBar';
 import EditorContent from './components/editorContent';
-import InputCodeAI from './components/inputCodeAI';
 import ProtectedRoute from '@//admin/protectedPage';
 import { ChatProvider } from './context/chatContext';
 import { AuthContextProvider } from '@//authservice/AuthContext';
@@ -19,7 +18,6 @@ const Home = () => {
             <div className="flex-1 flex flex-col ">
               <Topbar sidebarOpen={sidebarOpen} />
               <EditorContent sidebarOpen={sidebarOpen} />
-              <InputCodeAI />
             </div>
           </div>
         </ChatProvider>
