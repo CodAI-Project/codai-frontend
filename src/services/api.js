@@ -83,7 +83,7 @@ export async function postOpenAI(messages) {
 
 
     const messageToGFpt = [
-        { role: "system", content: "Crie um titulo para um chat (deve retornar apenas o titulo) de até 20 caracteres descrito o tema pedido pelo usuario SEMPRE GERE um titulo independente do que ele mandar" },
+        { role: "system", content: "Crie um titulo para um chat (deve retornar apenas o titulo) de até 20 caractere descrito o tema pedido pelo usuario SEMPRE GERE um titulo independente do que ele mandar não pode conter ASPAS" },
         { role: "user", content: messages }
     ];
 

@@ -1,25 +1,30 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 import { Button } from "@nextui-org/react";
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import Link from 'next/link';
-import { CodaiIcon } from '../../components/landpage/codaiIcon';
-import InputCustom from '../../ui/inputCustom';
-import { EyeFilledIcon } from './components/iconEye';
-import { EyeSlashFilledIcon } from './components/eyeSlashFilledIcon';
-import { useRouter } from 'next/navigation'
-import showToast from '../../ui/toastCustom';
-import ForgetPassword from './components/forgetPassword';
-import { signInWithGoogle, signInWithEmail, signInWithGithub } from '@//firebase/auth/signin';
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import Link from "next/link";
+import { CodaiIcon } from "../../components/landpage/codaiIcon";
+import InputCustom from "../../ui/inputCustom";
+import { EyeFilledIcon } from "./components/iconEye";
+import { EyeSlashFilledIcon } from "./components/eyeSlashFilledIcon";
+import { useRouter } from "next/navigation";
+import showToast from "../../ui/toastCustom";
+import ForgetPassword from "./components/forgetPassword";
+import {
+  signInWithGoogle,
+  signInWithEmail,
+  signInWithGithub,
+} from "@//firebase/auth/signin";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Digite um email válido').required('Email é obrigatório'),
-  password: Yup.string().required('Senha é obrigatória'),
+  email: Yup.string()
+    .email("Digite um email válido")
+    .required("Email é obrigatório"),
+  password: Yup.string().required("Senha é obrigatória"),
 });
 
-const routeToGo = `/editor`
+const routeToGo = `/editor`;
 
 export default function Login() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -27,19 +32,17 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-       await signInWithEmailPassword(values.email, values.password);
-
+        await signInWithEmailPassword(values.email, values.password);
       } catch (error) {
-        console.error('Erro de autenticação:', error);
+        console.error("Erro de autenticação:", error);
       }
     },
   });
@@ -48,25 +51,27 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const {result, error } = await signInWithEmail(email, password);
+      const { result, error } = await signInWithEmail(email, password);
 
       if (error) {
-        showToast(`${error.code === "auth/account-exists-with-different-credential"
-          ? "Usuario já tem esse email usando Google ou Github"
-          : "Credenciais inválidas"}`, "error")
+        showToast(
+          `${
+            error.code === "auth/account-exists-with-different-credential"
+              ? "Usuario já tem esse email usando Google ou Github"
+              : "Credenciais inválidas"
+          }`,
+          "error"
+        );
       } else {
         showToast("Sucesso na autenticação", "success");
         router.push(routeToGo);
       }
-
     } catch (error) {
-      showToast("Falha na autenticação", "error")
+      showToast("Falha na autenticação", "error");
     } finally {
       setLoading(false);
     }
   };
-
-
 
   const handleGoogleSignIn = async () => {
     try {
@@ -74,9 +79,14 @@ export default function Login() {
       const { error } = await signInWithGoogle();
 
       if (error) {
-        showToast(`${error.code == 'auth/account-exists-with-different-credential'
-          ? 'Usuario já tem esse email usando Github ou Email'
-          : 'Falha na autenticação Github'}`, "error")
+        showToast(
+          `${
+            error.code == "auth/account-exists-with-different-credential"
+              ? "Usuario já tem esse email usando Github ou Email"
+              : "Falha na autenticação Github"
+          }`,
+          "error"
+        );
       } else {
         showToast("Sucesso na autenticação Google", "success");
         router.push(routeToGo);
@@ -89,50 +99,53 @@ export default function Login() {
     }
   };
 
-
   const handleGithubSignIn = async () => {
     try {
       setLoading(true);
 
-      const { error } = await signInWithGithub()
+      const { error } = await signInWithGithub();
 
       if (error) {
-        showToast(`${error.code == 'auth/account-exists-with-different-credential'
-          ? 'Usuario já tem esse email usando Google ou Email'
-          : 'Falha na autenticação Github'}`, "error")
+        showToast(
+          `${
+            error.code == "auth/account-exists-with-different-credential"
+              ? "Usuario já tem esse email usando Google ou Email"
+              : "Falha na autenticação Github"
+          }`,
+          "error"
+        );
       } else {
-        showToast("Sucesso na autenticação Github", "success")
+        showToast("Sucesso na autenticação Github", "success");
         router.push(routeToGo);
       }
-
     } catch (error) {
-      showToast("Falha na autenticação Github", "error")
+      showToast("Falha na autenticação Github", "error");
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
     <>
-
       <div className="flex h-screen overflow-hidden">
         <div className="absolute top-1 left-2 p-4">
           <CodaiIcon className="w-12 h-12" />
         </div>
         <div className="w-full lg:w-1/2 flex items-center justify-center">
           <div className="w-3/4">
-
-            <div className='mb-8'>
-              <h1 className='text-3xl	'>Vamos ser <GradientText className="font-bold">criativos!</GradientText></h1>
-              <div className='mt-4 text-base text-gray-400'>
+            <div className="mb-8">
+              <h1 className="text-3xl	">
+                Vamos ser{" "}
+                <GradientText className="font-bold">criativos!</GradientText>
+              </h1>
+              <div className="mt-4 text-base text-gray-400">
                 <span>Faça login no CodAI para começar a criar a magia</span>
               </div>
             </div>
             <form onSubmit={formik.handleSubmit}>
               <InputCustom
-                radius='sm'
-                size='lg'
+                radius="sm"
+                size="lg"
                 type="email"
                 placeholder="email@codai.com"
                 labelPlacement="outside"
@@ -142,21 +155,33 @@ export default function Login() {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                validationState={formik.touched.email && formik.errors.email ? "invalid" : "valid"}
-                errorMessage={formik.touched.email && formik.errors.email ? formik.errors.email : ""}
-                startContent={<img src='./mail-icon.svg' />}
+                validationState={
+                  formik.touched.email && formik.errors.email
+                    ? "invalid"
+                    : "valid"
+                }
+                errorMessage={
+                  formik.touched.email && formik.errors.email
+                    ? formik.errors.email
+                    : ""
+                }
+                startContent={<img src="./mail-icon.svg" />}
               />
 
               <InputCustom
                 className="mb-1"
-                radius='sm'
-                size='lg'
+                radius="sm"
+                size="lg"
                 placeholder="Password"
                 labelPlacement="outside"
                 id="password"
                 name="password"
                 endContent={
-                  <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                  <button
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibility}
+                  >
                     {isVisible ? (
                       <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
                     ) : (
@@ -168,22 +193,29 @@ export default function Login() {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                validationState={formik.touched.password && formik.errors.password ? "invalid" : "valid"}
-                errorMessage={formik.touched.password && formik.errors.password ? formik.errors.password : ""}
-                startContent={<img src='./password-icon.svg' />}
+                validationState={
+                  formik.touched.password && formik.errors.password
+                    ? "invalid"
+                    : "valid"
+                }
+                errorMessage={
+                  formik.touched.password && formik.errors.password
+                    ? formik.errors.password
+                    : ""
+                }
+                startContent={<img src="./password-icon.svg" />}
               />
 
-              <div className='flex float-right'>
+              <div className="flex float-right">
                 <ForgetPassword />
               </div>
 
               <Button
-                radius='md'
-                size='lg'
+                radius="md"
+                size="lg"
                 type="submit"
                 className="w-full mt-2 font-semibold bg-sulu-300 text-black py-2 hover:bg-sulu-300 transition duration-300"
                 isLoading={loading}
-
               >
                 {loading ? "Carregando..." : "Login"}
               </Button>
@@ -195,15 +227,13 @@ export default function Login() {
                   </div>
                   <hr className="flex-grow border-t border-gray-400 hidden sm:block" />
                 </div>
-
               </div>
 
               <div className="flex space-x-4 mt-4">
-
                 <Button
-                  startContent={<img src='./google-icon.svg' className='w-7' />}
-                  radius='sm'
-                  size='lg'
+                  startContent={<img src="./google-icon.svg" className="w-7" />}
+                  radius="sm"
+                  size="lg"
                   type="button"
                   onClick={() => {
                     handleGoogleSignIn(); // Chamar a função de autenticação
@@ -215,9 +245,9 @@ export default function Login() {
                 </Button>
 
                 <Button
-                  startContent={<img src='./github-icon.svg' className='w-7' />}
-                  radius='sm'
-                  size='lg'
+                  startContent={<img src="./github-icon.svg" className="w-7" />}
+                  radius="sm"
+                  size="lg"
                   type="button"
                   onClick={() => {
                     handleGithubSignIn(); // Chamar a função de autenticação
@@ -229,30 +259,37 @@ export default function Login() {
                 </Button>
               </div>
 
-
-              <div className=''>
-
-                <span className='text-sm mt-5 text-gray-400'>Não tem conta? <GradientText className="font-bold" href="/register">Registrar</GradientText> </span>
-
+              <div className="">
+                <span className="text-sm mt-5 text-gray-400">
+                  Não tem conta?{" "}
+                  <GradientText className="font-bold" href="/register">
+                    Registrar
+                  </GradientText>{" "}
+                </span>
               </div>
-
             </form>
           </div>
-
-        </div >
-        <div className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center" style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/assets-screen-login.svg?alt=media&token=74ac6503-9f0e-4444-94f3-adb0e7e3ff6f')" }}></div>
-      </div >
-
+        </div>
+        <div
+          className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/assets-screen-login.svg?alt=media&token=74ac6503-9f0e-4444-94f3-adb0e7e3ff6f')",
+          }}
+        ></div>
+      </div>
     </>
   );
-};
-
-
+}
 
 const GradientText = ({ children, className, href, ...restProps }) => {
   if (href) {
     return (
-      <Link className={`gradient-text ${className} `} href={href} {...restProps}>
+      <Link
+        className={`gradient-text ${className} `}
+        href={href}
+        {...restProps}
+      >
         {children}
       </Link>
     );
