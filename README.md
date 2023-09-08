@@ -1,7 +1,7 @@
 # CodAI (Frontend)
 
 ## Demonstração
-Você pode conferir uma demonstração do projeto [aqui](https://codai-hub-development.web.app/).
+Link para o prototipo deployado [aqui](https://codai-hub-development.web.app/).
 
 ## Visão Geral
 O CodAI Frontend é a interface de usuário da plataforma, que tem como objetivo simplificar e democratizar a programação. Este projeto é parte fundamental da experiência do usuário, proporcionando uma interface intuitiva e eficiente para todos os desenvolvedores, desde iniciantes até profissionais experientes.
