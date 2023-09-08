@@ -13,10 +13,12 @@ Para executar o CodAI Frontend localmente, siga estas etapas:
    ```
    git clone https://github.com/CodAI-Project/codai-frontend.git
    cd codai-frontend
-   npm install
-   npm run dev
     ```
-
+2. Instale as dependencias e de um start na aplicação next
+    ```
+    npm install
+    npm run dev
+    ```
 ## Tecnologias Utilizadas
 - Next.js 13
 - Ecosistema Firebase
