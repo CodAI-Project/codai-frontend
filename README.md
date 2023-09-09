@@ -33,7 +33,7 @@ Como o projeto usa Firebase, você deve estar logado no firebase via cli na sua 
    cp .env.example .env
 
     ```
-4. Preencha as variaveis com suas credenciais do firebase.
+4. Preencha as variaveis com suas credenciais do firebase no .env criado no passo anterior.
    
 
 5. Iniciando localmente o projeto.
