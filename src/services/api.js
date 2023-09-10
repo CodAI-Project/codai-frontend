@@ -78,7 +78,7 @@ export async function postOpenAI(messages) {
 
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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',
+        'Authorization': `Bearer ${API_KEY_OPENAI}`,
     };
 
 
