@@ -3,9 +3,6 @@ import React from "react";
 import Container from "./container";
 import { FaLinkedin } from "react-icons/fa";
 
-import dennys from "../../../public/img-dennys.png";
-import henrique from "../../../public/img-henrique.png";
-import gustavo from "../../../public/img-gustavo.png";
 import luan from "../../../public/img-luan.png";
 import { Button } from "@nextui-org/react";
 
@@ -16,7 +13,7 @@ const creatorsData = [
     title: "Desenvolvedor",
     description:
       "Dennys Nascimento é um dos desenvolvedores talentosos por trás do CodAI. Sua paixão pela codificação e inovação o torna um ativo valioso para nossa equipe.",
-    image: dennys,
+    image: "/img-dennys.png",
     linkedin:
       "https://www.linkedin.com/in/dennys-alvarenga-do-nascimento-2604031a2/",
   },
@@ -25,7 +22,7 @@ const creatorsData = [
     title: "Desenvolvedor",
     description:
       "Henrique Cesar é um membro dedicado da equipe de desenvolvimento do CodAI. Sua experiência em construir soluções inovadoras é insubstituível.",
-    image: henrique,
+    image: "/img-henrique.png",
     linkedin: "https://www.linkedin.com/in/henriquecesar1011/",
   },
   {
@@ -33,7 +30,7 @@ const creatorsData = [
     title: "Desenvolvedor",
     description:
       "Gustavo Fonseca é um desenvolvedor apaixonado pelo trabalho que fazemos aqui no CodAI. Seu compromisso com a excelência é evidente em cada projeto que ele toca.",
-    image: gustavo,
+    image: "/img-gustavo.png",
     linkedin: "https://www.linkedin.com/in/gustavo-fonseca-/",
   },
   {
@@ -41,7 +38,7 @@ const creatorsData = [
     title: "Desenvolvedor",
     description:
       "Luan Reis é um membro valioso da equipe de desenvolvimento do CodAI. Sua criatividade e habilidades técnicas o tornam um ativo inestimável para nossa equipe.",
-    image: luan,
+    image: "/img-luan.png",
     linkedin: "https://www.linkedin.com/in/luan-reis-590620203/",
   },
 ];
@@ -79,10 +76,10 @@ function Avatar(props) {
   return (
     <div className="flex items-center mt-8 space-x-3">
       <div className="flex-shrink-0 overflow-hidden rounded-full w-14">
-        <Image
+        <img
           src={props.image}
-          width="40"
-          height="40"
+          width="60"
+          height="60"
           alt="Avatar"
           layout="responsive"
           placeholder="blur"

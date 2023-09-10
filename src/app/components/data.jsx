@@ -4,12 +4,10 @@ import {
   CursorClickIcon,
 } from "@heroicons/react/outline";
 
-import benefitOneImg from "./../../../public/low-code-rapid.png";
-
 const benefitOne = {
   title: "Destaque dos Benefícios do CodAI",
   desc: "Descubra por que o CodAI é a escolha ideal para simplificar seu fluxo de desenvolvimento de software.",
-  image: benefitOneImg,
+  image: "/low-code-rapid.png",
   bullets: [
     {
       title: "Crie Código de Qualidade Rapidamente",
