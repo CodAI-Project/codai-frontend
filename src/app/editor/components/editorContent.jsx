@@ -9,10 +9,10 @@ import Loading from "../../loading";
 import AnimationComponent from "./LoadingEditor";
 
 export default function EditorContent() {
-  const { selectedChat } = useChat();
+  const { selectedChat, loading} = useChat();
   const parentRef = useRef(null);
   const [showEditorPanel, setShowEditorPanel] = useState(Boolean(selectedChat));
-  const [loading, setLoading] = useState(true);
+ 
   useEffect(() => {
     setShowEditorPanel(Boolean(selectedChat));
   }, [selectedChat]);
@@ -31,8 +31,6 @@ export default function EditorContent() {
             <EditorPanel
               selectedChat={selectedChat}
               parentRef={parentRef}
-              setLoading={setLoading}
-              loading={loading}
             />
           </div>
         ) : (

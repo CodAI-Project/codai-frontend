@@ -1,29 +1,27 @@
-import React from 'react';
-import Container from './container';
-import Link from 'next/link';
-import lottie from 'lottie-web'; 
-import animationData from './../animations/animation-landpage.json'; 
+import React from "react";
+import Container from "./container";
+import Link from "next/link";
+import lottie from "lottie-web";
+import animationData from "./../animations/animation-landpage.json";
 
 export default function Hero() {
   const animationContainer = React.useRef(null);
 
   React.useEffect(() => {
-   
     lottie.loadAnimation({
       container: animationContainer.current,
-      renderer: 'svg',
+      renderer: "svg",
       loop: true,
       autoplay: true,
-      animationData, 
+      animationData,
     });
-
   }, []);
 
   return (
     <>
-      <Container className="flex flex-wrap">
-        <div className="flex items-center w-full lg:w-1/2">
-          <div className="max-w-2xl mb-8">
+      <Container className="flex flex-wrap px-4">
+        <div className="flex items-center w-full lg:w-1/2 lg:px-20">
+          <div className="max-w-2xl mb-6">
             <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
               Crie Códigos em segundos.
             </h1>
@@ -63,15 +61,14 @@ export default function Hero() {
           </div>
         </div>
         <div className="flex items-center justify-center w-full lg:w-1/2">
-         
           <div
             ref={animationContainer}
-            style={{ width: '100%', height: '100vh', overflow: 'hidden', textAlign: 'center' }}
+            className="overflow-hidden text-center hidden sm:block"
           />
         </div>
       </Container>
       <Container>
-        <div className="flex flex-col justify-center">
+        <div class="flex flex-col justify-center">
           <div className="text-xl text-center text-gray-700 dark:text-white">
             Projeto desenvolvido para
           </div>

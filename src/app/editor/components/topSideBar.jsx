@@ -1,15 +1,14 @@
-'use client'
-import { Button } from '@nextui-org/react';
-import React, { useState, useEffect } from 'react';
-import { FiDownload, FiShare2 } from 'react-icons/fi'
-import { BsFillPlayFill } from 'react-icons/bs'
-import { motion, useAnimation, AnimatePresence } from 'framer-motion';
-import { useChat } from '../context/chatContext';
+"use client";
 
+import { Button } from "@nextui-org/react";
+import React, { useState, useEffect } from "react";
+import { FiDownload } from "react-icons/fi";
+import { BsFillPlayFill } from "react-icons/bs";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { useChat } from "../context/chatContext";
+import { createZipFile } from "../../../../utils/zip-download-function";
 const Topbar = ({ sidebarOpen }) => {
-  const { selectedChat } = useChat();
-
-  const [loading, setLoading] = useState(false);
+  const { selectedChat, vmInstanceActual, loading, contentEditor } = useChat();
 
   const textControl = useAnimation();
   const buttonsControl = useAnimation();
@@ -24,29 +23,52 @@ const Topbar = ({ sidebarOpen }) => {
     visible: { opacity: 1, y: 0 },
   };
 
+  const handleDownloadZip = () => {
+    createZipFile(vmInstanceActual.projectData.files)
+  }
+
   useEffect(() => {
-    textControl.start(selectedChat?.title ? 'visible' : 'hidden');
-    buttonsControl.start(selectedChat?.title ? 'visible' : 'hidden');
-  }, [selectedChat]);
+    textControl.start(selectedChat?.title ? "visible" : "hidden");
+    buttonsControl.start(selectedChat?.title ? "visible" : "hidden");
+    console.log(vmInstanceActual);
+    console.log(contentEditor);
+  }, [selectedChat, vmInstanceActual]);
+
+  const handlePlayButtonClick = () => {
+    if (
+      vmInstanceActual &&
+      vmInstanceActual.vm &&
+      vmInstanceActual.vm.preview &&
+      vmInstanceActual.vm.preview.origin
+    ) {
+      const externalWebsiteURL = vmInstanceActual.vm.preview.origin;
+      window.open(externalWebsiteURL, "_blank");
+    }
+  };
 
   return (
     <motion.div
       animate={{ opacity: 1 }}
       initial={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className={`bg-blackcodai-950 my-3 mx-1 py-6 px-4  rounded-3xl ${sidebarOpen ? 'ml-1/4' : 'ml-1/5'
-        } transition-all duration-300`}
+      className={`bg-blackcodai-950 my-3 mx-1 py-6 px-4  rounded-3xl ${
+        sidebarOpen ? "ml-1/4" : "ml-1/5"
+      } transition-all duration-300`}
     >
-      <div className='flex flex-row items-center w-full justify-between'>
+      <div className="flex flex-row items-center w-full justify-between">
         <motion.h1
-          key={selectedChat?.title} // Chave única para forçar a transição ao mudar o título
+          key={selectedChat?.title}
           initial={{ opacity: 0, y: -20 }}
           animate="visible"
           exit="hidden"
           variants={textAnimation}
           className="text-white h-[40px] text-lg"
         >
-          {selectedChat && (selectedChat.title !== '' ? selectedChat.title : "Novo template") || "Novo template"}
+          {(selectedChat &&
+            (selectedChat.title !== ""
+              ? selectedChat.title
+              : "Novo template")) ||
+            "Novo template"}
         </motion.h1>
         <AnimatePresence>
           {selectedChat?.title && (
@@ -59,16 +81,24 @@ const Topbar = ({ sidebarOpen }) => {
               transition={{ duration: 0.3 }}
               className={`flex flex-row gap-5`}
             >
-              <Button variant='light' className='text-gray-400' isLoading={loading} startContent={!loading ? <FiDownload /> : ""}>
+              <Button
+                variant="light"
+                className="text-gray-400"
+                isLoading={loading}
+                startContent={!loading ? <FiDownload /> : ""}
+                onClick={handleDownloadZip}
+              >
                 Download (ZIP)
               </Button>
 
-              <Button variant='light' className='text-gray-400' isLoading={loading} startContent={!loading ? <FiShare2 /> : ""}>
-                Compartilhar
-              </Button>
-
-              <Button variant='solid' className='text-gray-400' isLoading={loading} isIconOnly>
-                <BsFillPlayFill size={30} />
+              <Button
+                variant="solid"
+                className="text-gray-400"
+                isLoading={loading}
+                isIconOnly
+                onClick={handlePlayButtonClick}
+              >
+                {loading ? "" : <BsFillPlayFill size={30} />}
               </Button>
             </motion.div>
           )}

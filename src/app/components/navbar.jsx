@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CodaiIcon } from "./landpage/codaiIcon";
+import { CodaiIcon } from "./codaiIcon";
 
 export default function Navbar() {
   const navigation = [];

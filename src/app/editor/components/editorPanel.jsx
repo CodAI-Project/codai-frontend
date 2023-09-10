@@ -6,9 +6,10 @@ import { useChat } from "../context/chatContext";
 import { useAuthContext } from "@//authservice/AuthContext";
 import { getChatById } from "@//services/api";
 
-export default function EditorPanel({ loading, setLoading }) {
+export default function EditorPanel() {
   const { user } = useAuthContext();
-  const { selectedChat, contentEditor } = useChat();
+  const { selectedChat, contentEditor, setVmInstanceActual, setLoading } =
+    useChat();
 
   const [projectInitialized, setProjectInitialized] = useState(false);
   const [projectFiles, setProjectFiles] = useState({});
@@ -27,7 +28,6 @@ export default function EditorPanel({ loading, setLoading }) {
   useEffect(() => {
     console.log("contentEditor", contentEditor);
     if (projectInitialized && contentEditor.history?.slice(-1)) {
-      console.log("cai aqui?", contentEditor);
       applyChangesToEditor();
     }
   }, [contentEditor, projectInitialized]);
@@ -35,44 +35,50 @@ export default function EditorPanel({ loading, setLoading }) {
   const initializeProject = async () => {
     try {
       const response = await getChatById(selectedChat.id, user);
-  
+
       let projectData = {};
       try {
         projectData = JSON.parse(response.data.history.slice(-1)[0].content);
       } catch (error) {
         console.error("Erro ao analisar o JSON do projeto:", error);
-        // Lide com o erro de análise JSON aqui
-        // Você pode definir um valor padrão ou tratar o erro de acordo com suas necessidades
       }
-  
+
       const iframe = document.getElementById("stackblitz-iframe");
-      const vm = await sdk.embedProject(iframe, projectData);
+      const vm = await sdk.embedProject(iframe, projectData, {
+        hideNavigation: true,
+      });
+
       setLoading(false);
+      const objectToInstance = {
+        vm, 
+        projectData
+      }
       setVmSave(vm);
+      setVmInstanceActual(objectToInstance);
       setProjectFiles(projectData);
       setProjectInitialized(true);
-  
+
       await vm.editor.setTheme("dark");
     } catch (error) {
       console.error("Erro ao inicializar o projeto:", error);
-      setLoading(false); // Certifique-se de parar o loading em caso de erro
+      setLoading(false);
     }
   };
-  
+
   const applyChangesToEditor = async () => {
     try {
       const iframe = document.getElementById("stackblitz-iframe");
       const vm = await sdk.connect(iframe);
-  
+
       console.log("vm", vm);
-  
+
       const diff = computeFileDiff(
         JSON.parse(
           contentEditor.history[contentEditor.history.length - 1].content
         ).files,
         projectFiles.files
       );
-  
+
       await vm.applyFsDiff({
         create: diff.create,
         destroy: [],

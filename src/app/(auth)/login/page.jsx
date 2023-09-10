@@ -4,7 +4,7 @@ import { Button } from "@nextui-org/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
-import { CodaiIcon } from "../../components/landpage/codaiIcon";
+import { CodaiIcon } from "../../components/codaiIcon";
 import InputCustom from "../../ui/inputCustom";
 import { EyeFilledIcon } from "./components/iconEye";
 import { EyeSlashFilledIcon } from "./components/eyeSlashFilledIcon";
