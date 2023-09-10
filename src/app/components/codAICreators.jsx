@@ -3,10 +3,10 @@ import React from "react";
 import Container from "./container";
 import { FaLinkedin } from "react-icons/fa";
 
-import dennys from "../../../public/img/img-dennys.png";
-import henrique from "../../../public/img/img-henrique.png";
-import gustavo from "../../../public/img/img-gustavo.png";
-import luan from "../../../public/img/img-luan.png";
+import dennys from "../../../public/img-dennys.png";
+import henrique from "../../../public/img-henrique.png";
+import gustavo from "../../../public/img-gustavo.png";
+import luan from "../../../public/img-luan.png";
 import { Button } from "@nextui-org/react";
 
 // Array de objetos com os dados dos criadores
