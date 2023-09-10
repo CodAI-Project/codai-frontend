@@ -33,27 +33,12 @@ export default function EditorPanel({ loading, setLoading }) {
   }, [contentEditor, projectInitialized]);
 
   const initializeProject = async () => {
-    // Simulate API call to fetch project data
     const response = await getChatById(selectedChat.id, user);
-
     const projectData = JSON.parse(response.data.history.slice(-1)[0].content);
-
-    console.log(response.data.history.slice(-1)[0].content);
-
-    // Create and embed the project
-    // const vm = await sdk.embedProject("stackblitz-iframe", projectData, {
-    //   height: "100%",
-    //   width: "100%",
-    //   hideNavigation: true,
-    // });
-
     const iframe = document.getElementById("stackblitz-iframe");
     const vm = await sdk.embedProject(iframe, projectData);
-
-    setVmSave(vm);
-
     setLoading(false);
-
+    setVmSave(vm);
     setProjectFiles(projectData);
     setProjectInitialized(true);
 
@@ -71,7 +56,6 @@ export default function EditorPanel({ loading, setLoading }) {
       ).files,
       projectFiles.files
     );
-
 
     await vm.applyFsDiff({
       create: diff.create,

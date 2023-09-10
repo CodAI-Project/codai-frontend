@@ -5,6 +5,8 @@ import EditorPanel from "./editorPanel";
 import MainEditor from "./MainEditor";
 import { ChatProvider, useChat } from "../context/chatContext";
 import InputCodeAI from "./InputCodeAI";
+import Loading from "../../loading";
+import AnimationComponent from "./LoadingEditor";
 
 export default function EditorContent() {
   const { selectedChat } = useChat();
@@ -22,7 +24,7 @@ export default function EditorContent() {
           <div className="h-full">
             {loading ? (
               <div className="z-10 absolute w-full h-full flex flex-col justify-center items-center bg-black opacity-90 backdrop-blur-lg">
-                <h1>Carregando os dados</h1>
+                <Loading/>
               </div>
             ) : null}
 

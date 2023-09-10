@@ -23,6 +23,7 @@
     "formik": "^2.4.3",
     "framer-motion": "^10.16.0",
     "heroicons-react": "^1.4.1",
+    "lottie-web": "^5.12.2",
     "next": "13.4.18",
     "next-firebase-auth": "^1.0.0-beta.0",
     "next-themes": "^0.2.1",
