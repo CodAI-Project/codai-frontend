@@ -270,13 +270,10 @@ export default function Login() {
             </form>
           </div>
         </div>
-        <div
+        <img
           className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/assets-screen-login.svg?alt=media&token=74ac6503-9f0e-4444-94f3-adb0e7e3ff6f')",
-          }}
-        ></div>
+          src="/assets-screen-login.png"
+        />
       </div>
     </>
   );

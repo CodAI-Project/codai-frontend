@@ -277,13 +277,10 @@ export default function Register() {
             </div>
           </div>
         </div>
-        <div
+        <img
           className="hidden rounded-bl-large rounded-tl-large lg:flex flex-grow bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/assets-screen-register.svg?alt=media&token=65fec3ae-1248-41e8-8484-8cca04b074cb')",
-          }}
-        ></div>
+          src="/assets-screen-register.png"
+        />
       </div>
     </>
   );
