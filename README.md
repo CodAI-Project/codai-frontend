@@ -1,10 +1,22 @@
 # CodAI (Frontend)
 
-## Demonstração
-Link para o prototipo deployado [aqui](https://codai-hub.web.app/).
+## Demonstração explicada em video
+- [Video Demonstrativo](https://youtu.be/IDMh8szqQa4)
 
-## Visão Geral
-O CodAI Frontend é a interface de usuário da plataforma, que tem como objetivo simplificar e democratizar a programação. Este projeto é parte fundamental da experiência do usuário, proporcionando uma interface intuitiva e eficiente para todos os desenvolvedores, desde iniciantes até profissionais experientes.
+**Visite nosso site:**  [CodAI-hub](https://codai-hub.web.app/)
+
+## CodAI - Transformando o Desenvolvimento Front-End com IA NPL
+
+O CodAI é uma plataforma revolucionária que utiliza a Inteligência Artificial (IA) para simplificar e acelerar o processo de desenvolvimento front-end. Com o CodAI, você pode gerar automaticamente templates para os principais frameworks de mercado, economizando tempo e esforço significativos.
+
+**Recursos Destacados:**
+
+- **Geração de Templates:** Crie rapidamente estruturas de projeto e componentes para React e futuramente mais opções
+- **Personalização Flexível:** Ajuste os templates gerados de acordo com suas necessidades específicas.
+- **Integração Perfeita:** Integre facilmente o CodAI em seu fluxo de trabalho de desenvolvimento existente.
+- **Aumento de Produtividade:** Economize horas de trabalho manual e dedique mais tempo à criação de recursos e funcionalidades únicas.
+
+Descubra como o CodAI está transformando a maneira como desenvolvemos aplicações front-end. Experimente hoje mesmo e experimente o futuro do desenvolvimento web!
 
 ## Como Executar Localmente
 Para executar o CodAI Back-end localmente, siga estas etapas:
@@ -48,5 +60,15 @@ Como o projeto usa Firebase, você deve estar logado no firebase via cli na sua 
 - Formik
 - Yup
 
-# Arquitetura
+## Arquitetura
 ![Desenho da arquitetura](https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/codai-arquitetura-CodAI.drawio.png?alt=media&token=8098019e-2bd0-4f2e-b604-ba9338a22e91)
+
+## Repositórios Subjacentes
+
+O sucesso do CodAI não seria possível sem a colaboração de diversos repositórios subjacentes que desempenham um papel fundamental em seu funcionamento. Abaixo estão alguns dos repositórios mais importantes que contribuem para o desenvolvimento e aprimoramento contínuo do CodAI:
+
+- **[codai-backend](https://github.com/CodAI-Project/codai-backend.git)**: Repositorio do backend do projeto, onde está o coração da aplicação.
+
+
+Lembramos que esses repositórios subjacentes são essenciais para o funcionamento do CodAI e representam nossa comunidade de desenvolvedores comprometidos em tornar a plataforma ainda mais poderosa e eficiente.
+
