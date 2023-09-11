@@ -29,7 +29,7 @@ export default function Video() {
           )}
           {playVideo && (
             <iframe
-              src="https://www.youtube.com/embed/91u8zTa1ZDM?si=GhDVfoV11uPi4oW8&amp;controls=0"
+              src="https://www.youtube.com/embed/IDMh8szqQa4?si=wnZJBPkHgo0oGPJg"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
