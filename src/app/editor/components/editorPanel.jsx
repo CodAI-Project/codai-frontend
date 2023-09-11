@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import sdk from "@stackblitz/sdk";
 import { useChat } from "../context/chatContext";
@@ -10,13 +9,11 @@ export default function EditorPanel() {
   const { user } = useAuthContext();
   const { selectedChat, contentEditor, setVmInstanceActual, setLoading } =
     useChat();
-
   const [projectInitialized, setProjectInitialized] = useState(false);
   const [projectFiles, setProjectFiles] = useState({});
   const [currentChatId, setCurrentChatId] = useState("");
   const [vmSave, setVmSave] = useState();
   const iframeRef = useRef(null);
-
   useEffect(() => {
     if (selectedChat && selectedChat.id && selectedChat.id !== currentChatId) {
       setLoading(true);
@@ -24,9 +21,7 @@ export default function EditorPanel() {
       initializeProject();
     }
   }, [selectedChat, currentChatId]);
-
   useEffect(() => {
-    console.log("contentEditor", contentEditor);
     if (projectInitialized && contentEditor.history?.slice(-1)) {
       applyChangesToEditor();
     }
@@ -47,13 +42,12 @@ export default function EditorPanel() {
       const vm = await sdk.embedProject(iframe, projectData, {
         hideNavigation: true,
       });
-
       setLoading(false);
-      const objectToInstance = {
-        vm, 
-        projectData
-      }
       setVmSave(vm);
+      const objectToInstance = {
+        vm,
+        projectData,
+      };
       setVmInstanceActual(objectToInstance);
       setProjectFiles(projectData);
       setProjectInitialized(true);
@@ -87,7 +81,6 @@ export default function EditorPanel() {
       console.error("Erro ao aplicar alterações ao editor:", error);
     }
   };
-
   const computeFileDiff = (newFiles, existingFiles) => {
     const diff = {
       create: {},
@@ -95,22 +88,18 @@ export default function EditorPanel() {
     };
     console.log("newFiles", newFiles);
     console.log("existingFiles", existingFiles);
-
     for (const file in newFiles) {
       if (!existingFiles[file] || existingFiles[file] !== newFiles[file]) {
         diff.create[file] = newFiles[file];
       }
     }
-
     for (const file in existingFiles) {
       if (!newFiles[file]) {
         diff.destroy.push(file);
       }
     }
-
     return diff;
   };
-
   return (
     <div className="responsive-iframe">
       <iframe
