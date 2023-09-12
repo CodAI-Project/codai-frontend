@@ -6,12 +6,11 @@ import SelectCustom from "./selectCustom";
 import { Formik, Form, Field } from "formik";
 import showToast from "../../ui/toastCustom";
 import { useAuthContext } from "@//authservice/AuthContext";
-import {
-  getAllFrameworkOptions,
-  postCodeToOpenAI,
-  postOpenAI,
-  patchChatTitle,
-} from "@//services/api";
+import { patchChatTitle } from "@//actions/chat";
+
+import { getAllFrameworkOptions } from "@//actions/frameworks";
+import { postCodeToOpenAI } from "@//actions/codai-ia";
+import { postOpenAI } from "@//actions/openAI";
 import { useChat } from "../context/chatContext";
 
 const InputCodeAI = () => {

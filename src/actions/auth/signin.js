@@ -1,4 +1,4 @@
-import firebase_app from "../config";
+import firebase_app from "../../firebase/config";
 import {
     signInWithEmailAndPassword,
     signInWithPopup,

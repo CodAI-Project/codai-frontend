@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import showToast from "../../ui/toastCustom";
 import "react-toastify/dist/ReactToastify.css";
 
-import signUp from "@//firebase/auth/signup";
+import signUp from "@//actions/auth/signup";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Primeiro nome obrigatório"),

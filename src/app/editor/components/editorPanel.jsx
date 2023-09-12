@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import sdk from "@stackblitz/sdk";
 import { useChat } from "../context/chatContext";
 import { useAuthContext } from "@//authservice/AuthContext";
-import { getChatById } from "@//services/api";
+import { getChatById } from "@//actions/chat";
 
 export default function EditorPanel() {
   const { user } = useAuthContext();

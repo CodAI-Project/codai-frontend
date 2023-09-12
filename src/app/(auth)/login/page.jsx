@@ -15,7 +15,7 @@ import {
   signInWithGoogle,
   signInWithEmail,
   signInWithGithub,
-} from "@//firebase/auth/signin";
+} from "@//actions/auth/signin";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()

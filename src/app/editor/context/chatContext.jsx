@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getChatsByUserId } from "@//services/api";
+import { getChatsByUserId } from "@//actions/chat";
 import { useAuthContext } from "@//authservice/AuthContext";
 const ChatContext = createContext();
 

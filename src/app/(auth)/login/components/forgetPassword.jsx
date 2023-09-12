@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { sendPasswordResetEmail } from "firebase/auth";
 import showToast from '../../../ui/toastCustom';
 import InputCustom from "../../../ui/inputCustom";
-import forgetPassword from "@//firebase/auth/forget";
+import forgetPassword from "@//actions/auth/forget";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Digite um email válido').required('Email é obrigatório'),
