@@ -10,9 +10,11 @@ export function ChatProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [contentEditor, setContentEditor] = useState([]);
   const [vmInstanceActual, setVmInstanceActual] = useState();
+  const [loadingChats, setLoadingChats] = useState(false);
 
   useEffect(() => {
     async function fetchChats() {
+      setLoadingChats(true)
       try {
         const userId = user.uid;
         const response = await getChatsByUserId(userId, user);
@@ -23,8 +25,12 @@ export function ChatProvider({ children }) {
       } catch (error) {
         console.error("Error fetching chats:", error);
       }
+
+      setLoadingChats(false)
     }
+   
     fetchChats();
+   
   }, []);
 
   async function fetchChats() {
@@ -66,6 +72,8 @@ export function ChatProvider({ children }) {
         setVmInstanceActual,
         loading,
         setLoading,
+        loadingChats,
+        setLoadingChats,
       }}
     >
       {children}

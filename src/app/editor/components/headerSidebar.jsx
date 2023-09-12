@@ -9,13 +9,11 @@ import { useAuthContext } from '@//authservice/AuthContext'
 export default function HeaderSidebar({ active }) {
     const { user, handleLogout } = useAuthContext()
 
-
-
     return (
         <header className={`px-2 flex flex-row items-center ${active ? 'flex-row gap-7' : 'flex-col items-center justify-center'}`}>
             <div className={`${active ? '' : ''}`}>
                 {!active ? (
-                    <DropdownContent color="default" variant="light" active={active}>
+                    <DropdownContent color="default" variant="light" handleLogout={handleLogout} active={active}>
                         <Avatar showFallback isBordered src={user?.photoURL} />
                     </DropdownContent>
                 ) :
