@@ -152,7 +152,11 @@ export default function Sidebar() {
                         variant="light"
                         color="default"
                       >
-                        <AiFillMessage className="text-lg text-sulu-300" />
+                        <div>
+                          <AiFillMessage
+                            className="text-lg text-sulu-300"
+                          />
+                        </div>
                         <motion.p
                           animate={controlText}
                           className="ml-4 text-sm font-bold text-gray-300 overflow-hidden overflow-ellipsis whitespace-nowrap max-w-[160px]"
