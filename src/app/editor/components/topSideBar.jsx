@@ -6,7 +6,7 @@ import { FiDownload } from "react-icons/fi";
 import { BsFillPlayFill } from "react-icons/bs";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useChat } from "../context/chatContext";
-import { createZipFile } from "../../../../utils/zip-download-function";
+import { createZipFile } from "../../../utils/zip-download-function";
 const Topbar = ({ sidebarOpen }) => {
   const { selectedChat, vmInstanceActual, loading, contentEditor } = useChat();
 
