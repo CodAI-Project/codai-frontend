@@ -16,6 +16,7 @@ import {
   signInWithEmail,
   signInWithGithub,
 } from "@//actions/auth/signin";
+import ModalLoading from "./components/modalLoading";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -83,7 +84,7 @@ export default function Login() {
           `${
             error.code == "auth/account-exists-with-different-credential"
               ? "Usuario já tem esse email usando Github ou Email"
-              : "Falha na autenticação Github"
+              : "Falha na autenticação Google"
           }`,
           "error"
         );
@@ -127,6 +128,7 @@ export default function Login() {
 
   return (
     <>
+    {loading ?  <ModalLoading/> : "" }
       <div className="flex h-screen overflow-hidden">
         <div className="absolute top-1 left-2 p-4">
           <CodaiIcon className="w-12 h-12" />
@@ -215,7 +217,6 @@ export default function Login() {
                 size="lg"
                 type="submit"
                 className="w-full mt-2 font-semibold bg-sulu-300 text-black py-2 hover:bg-sulu-300 transition duration-300"
-                isLoading={loading}
               >
                 {loading ? "Carregando..." : "Login"}
               </Button>
@@ -231,29 +232,27 @@ export default function Login() {
 
               <div className="flex space-x-4 mt-4">
                 <Button
-                  startContent={<img src="./google-icon.svg" className="w-7" />}
+                  startContent={loading ? "" :  <img src="./google-icon.svg" className="w-7" />}
                   radius="sm"
                   size="lg"
                   type="button"
                   onClick={() => {
-                    handleGoogleSignIn(); // Chamar a função de autenticação
+                    handleGoogleSignIn();
                   }}
                   className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
-                  isLoading={loading}
                 >
                   {loading ? "Carregando..." : "Continue com Google"}
                 </Button>
 
                 <Button
-                  startContent={<img src="./github-icon.svg" className="w-7" />}
+                  startContent={loading ? "" : <img src="./github-icon.svg" className="w-7" />}
                   radius="sm"
                   size="lg"
                   type="button"
                   onClick={() => {
-                    handleGithubSignIn(); // Chamar a função de autenticação
+                    handleGithubSignIn();
                   }}
                   className="w-full font-semibold mb-4 bg-shark-950 text-shark-400 py-2 hover:bg-gray-300 transition duration-300 mobile-hide-text"
-                  isLoading={loading}
                 >
                   {loading ? "Carregando..." : "Continue com GitHub"}
                 </Button>

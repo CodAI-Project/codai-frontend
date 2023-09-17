@@ -1,9 +1,11 @@
+import Loading from '@//app/loading';
 import React from 'react';
 
-export default function Loading() {
+export default function LoadingModal() {
   return (
-    <main className="flex flex-col gap-3">
-   <div className="dank-ass-loader ">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-woodsmoke-950 p-10 rounded-lg shadow-2xl">
+      <div className="dank-ass-loader ">
       <div className="row">
          <div className="arrow up outer outer-18"></div>
          <div className="arrow down outer outer-17"></div>
@@ -37,6 +39,8 @@ export default function Loading() {
          <div className="arrow down outer outer-9"></div>
       </div>
    </div>
-</main>
+        <div className="mt-4 text-center">Autenticando...</div>
+      </div>
+    </div>
   );
 }
