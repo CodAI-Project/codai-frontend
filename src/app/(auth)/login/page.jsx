@@ -232,7 +232,7 @@ export default function Login() {
 
               <div className="flex space-x-4 mt-4">
                 <Button
-                  startContent={loading ? "" :  <img src="./google-icon.svg" className="w-7" />}
+                  startContent={<img src="./google-icon.svg" className="w-7" />}
                   radius="sm"
                   size="lg"
                   type="button"
@@ -245,7 +245,7 @@ export default function Login() {
                 </Button>
 
                 <Button
-                  startContent={loading ? "" : <img src="./github-icon.svg" className="w-7" />}
+                  startContent={<img src="./github-icon.svg" className="w-7" />}
                   radius="sm"
                   size="lg"
                   type="button"
