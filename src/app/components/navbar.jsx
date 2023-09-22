@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { CodaiIcon } from "./codaiIcon";
+import Container from "./container";
 
 export default function Navbar() {
   const navigation = [];
 
   return (
-    <div className="w-full px-5 py-3">
+    <Container className="pt-4">
       <nav className="container flex items-center justify-between">
         <Link href="/">
           <span className="flex items-center space-x-2 text-2xl font-medium">
@@ -37,6 +38,6 @@ export default function Navbar() {
           </Link>
         </div>
       </nav>
-    </div>
+    </Container>
   );
 }

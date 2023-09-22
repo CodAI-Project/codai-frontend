@@ -76,6 +76,35 @@ export async function patchChatTitle(idChat, title, userId, user) {
 }
 
 
+
+export async function updateEditor(idChat, editor, userId, user) {
+    const authToken = await getAuthToken(user);
+
+
+    if (!authToken) {
+
+        return null;
+    }
+
+    console.log('authToken', authToken)
+
+    const response = await fetch(`${API_BASE_URL}/chats/editor/${idChat}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({
+            editor,
+            userId,
+        }),
+    });
+
+    return response.json();
+}
+
+
+
 export async function deleteChat(chatId, user) {
     const authToken = await getAuthToken(user);
 
