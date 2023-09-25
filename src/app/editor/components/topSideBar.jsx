@@ -8,7 +8,7 @@ import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useChat } from "../context/chatContext";
 import { createZipFile } from "../../../utils/zip-download-function";
 const Topbar = ({ sidebarOpen }) => {
-  const { selectedChat, vmInstanceActual, loading, contentEditor } = useChat();
+  const { selectedChat, vmInstanceActual, loading } = useChat();
 
   const textControl = useAnimation();
   const buttonsControl = useAnimation();
@@ -23,15 +23,14 @@ const Topbar = ({ sidebarOpen }) => {
     visible: { opacity: 1, y: 0 },
   };
 
-  const handleDownloadZip = () => {
-    createZipFile(vmInstanceActual.projectData.files)
-  }
+  const handleDownloadZip = async () => {
+    const files = await vmInstanceActual.vm.getFsSnapshot();
+    createZipFile(files);
+  };
 
   useEffect(() => {
     textControl.start(selectedChat?.title ? "visible" : "hidden");
     buttonsControl.start(selectedChat?.title ? "visible" : "hidden");
-    console.log(vmInstanceActual);
-    console.log(contentEditor);
   }, [selectedChat, vmInstanceActual]);
 
   const handlePlayButtonClick = () => {

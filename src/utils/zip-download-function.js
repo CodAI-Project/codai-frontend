@@ -3,7 +3,6 @@ import JSZip from "jszip";
 export const createZipFile = (jsonContent) => {
   const zip = new JSZip();
 
-  console.log("jsonContent", jsonContent);
   const packageJson =
     JSON.parse(jsonContent["package.json"]) || "codai-project";
   const projectName = packageJson.name;

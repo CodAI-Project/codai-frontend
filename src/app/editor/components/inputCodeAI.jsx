@@ -40,8 +40,6 @@ const InputCodeAI = () => {
   }, []);
 
   const askTemplate = async (ask, template) => {
-    console.log("selected", selectedChat);
-
     setLoading(true);
     const request = {
       ask: ask,

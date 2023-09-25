@@ -14,7 +14,7 @@ export function ChatProvider({ children }) {
 
   useEffect(() => {
     async function fetchChats() {
-      setLoadingChats(true)
+      setLoadingChats(true);
       try {
         const userId = user.uid;
         const response = await getChatsByUserId(userId, user);
@@ -26,11 +26,10 @@ export function ChatProvider({ children }) {
         console.error("Error fetching chats:", error);
       }
 
-      setLoadingChats(false)
+      setLoadingChats(false);
     }
-   
+
     fetchChats();
-   
   }, []);
 
   async function fetchChats() {
@@ -49,9 +48,7 @@ export function ChatProvider({ children }) {
 
   async function getChatById(id) {
     try {
-      const response = await getChatById(id, user);
-
-      console.log(response);
+      await getChatById(id, user);
     } catch (error) {
       console.error("Error fetching chats:", error);
     }
