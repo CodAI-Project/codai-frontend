@@ -1,21 +1,35 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
 - main
 
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  - group: firebase_dev
+
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+- script: |
+    npm install 
+    npm install firebase
+  displayName: 'npm install and npm install firebase'
 
 - script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+    echo "NEXT_PUBLIC_FIREBASE_API_KEY=$NEXT_PUBLIC_FIREBASE_API_KEY" >> .env
+    echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=$NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN" >> .env
+    echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=$NEXT_PUBLIC_FIREBASE_PROJECT_ID" >> .env
+    echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=$NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET" >> .env
+    echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=$NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID" >> .env
+    echo "NEXT_PUBLIC_FIREBASE_APP_ID=$NEXT_PUBLIC_FIREBASE_APP_ID" >> .env
+    echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=$NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID" >> .env
+    echo "NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL" >> .env
+    echo "NEXT_PUBLIC_API_KEY_OPEN_AI=$NEXT_PUBLIC_API_KEY_OPEN_AI" >> .env
+  displayName: 'Create .env file'
+
+- script: |
+    npm run deploy:dev
+  displayName: 'npm run deploy:dev'
+
+- script: |
+    rm .env  # Exclui o arquivo .env.development após o deploy
+  displayName: 'Delete .env'
+  condition: always()  # Certifique-se de que esta etapa seja executada, independentemente do sucesso ou falha das etapas anteriores
