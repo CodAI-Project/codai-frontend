@@ -1,4 +1,3 @@
-'use client'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Providers } from "./providers";
@@ -7,10 +6,6 @@ import { AuthContextProvider } from '../authservice/AuthContext';
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'CodAI Hub',
-  description: 'Driven-ai templates projects fronts-end',
-}
 
 export default function RootLayout({ children }) {
   return (
