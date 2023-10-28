@@ -1,13 +1,9 @@
-'use client'
 import React, { useState, useEffect } from "react";
-
-
 
 function SelectCustom({ options, onSelectChange, isValid }) {
   const [selectedValue, setSelectedValue] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const [hasBounced, setHasBounced] = useState(false);
-
 
   useEffect(() => {
     setIsInvalid(!isValid);
@@ -19,6 +15,14 @@ function SelectCustom({ options, onSelectChange, isValid }) {
     }
   }, [isValid]);
 
+  useEffect(() => {
+    // Verifica se há opções disponíveis
+    if (options.length > 0) {
+      setSelectedValue(options[0].template); // Seleciona o primeiro item
+      onSelectChange(options[0].template); // Dispara a função de seleção
+    }
+  }, [options, onSelectChange]);
+
   const handleChange = (event) => {
     const selectedValue = event.target.value;
     if (selectedValue === "Selecione o framework") {
@@ -27,7 +31,6 @@ function SelectCustom({ options, onSelectChange, isValid }) {
       setSelectedValue(selectedValue);
       onSelectChange(selectedValue);
     }
-
   };
 
   const selectClasses = `custom-select ${isInvalid && hasBounced ? 'animate-bounce' : ''}`;

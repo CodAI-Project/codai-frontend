@@ -1,42 +1,45 @@
-import React from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
+import Lottie from 'lottie-web';
+import lottieAnimation1 from '../../public/pumpkin.json'; 
+import lottieAnimation2 from '../../public/halloween-eyes.json'; 
+import lottieAnimation3 from '../../public/animation_lo99xuxx.json'; 
+import lottieAnimation4 from '../../public/animation_lo99xzzr.json'; 
 
-export default function Loading() {
+const Loading = () => {
+  const [randomOption, setRandomOption] = useState(null);
+
+  const animations = [lottieAnimation1, lottieAnimation2, lottieAnimation3, lottieAnimation4];
+  const randomIndex = Math.floor(Math.random() * (animations.length + 1));
+
+  useEffect(() => {
+    if (randomIndex === 0) {
+      setRandomOption('content');
+    } else {
+      setRandomOption('lottie');
+      const selectedAnimation = animations[randomIndex - 1];
+
+      const animation = Lottie.loadAnimation({
+        container: document.getElementById('lottie-container'), 
+        renderer: 'svg',
+        animationData: selectedAnimation,
+        loop: true,
+        autoplay: true,
+      });
+
+      return () => {
+        animation.stop();
+      };
+    }
+  }, [randomIndex, animations]);
+
   return (
     <main className="flex flex-col gap-3">
-   <div className="dank-ass-loader ">
-      <div className="row">
-         <div className="arrow up outer outer-18"></div>
-         <div className="arrow down outer outer-17"></div>
-         <div className="arrow up outer outer-16"></div>
-         <div className="arrow down outer outer-15"></div>
-         <div className="arrow up outer outer-14"></div>
-      </div>
-      <div className="row">
-         <div className="arrow up outer outer-1"></div>
-         <div className="arrow down outer outer-2"></div>
-         <div className="arrow up inner inner-6"></div>
-         <div className="arrow down inner inner-5"></div>
-         <div className="arrow up inner inner-4"></div>
-         <div className="arrow down outer outer-13"></div>
-         <div className="arrow up outer outer-12"></div>
-      </div>
-      <div className="row">
-         <div className="arrow down outer outer-3"></div>
-         <div className="arrow up outer outer-4"></div>
-         <div className="arrow down inner inner-1"></div>
-         <div className="arrow up inner inner-2"></div>
-         <div className="arrow down inner inner-3"></div>
-         <div className="arrow up outer outer-11"></div>
-         <div className="arrow down outer outer-10"></div>
-      </div>
-      <div className="row">
-         <div className="arrow down outer outer-5"></div>
-         <div className="arrow up outer outer-6"></div>
-         <div className="arrow down outer outer-7"></div>
-         <div className="arrow up outer outer-8"></div>
-         <div className="arrow down outer outer-9"></div>
-      </div>
-   </div>
-</main>
+      {randomOption === 'lottie' && (
+        <div id="lottie-container" style={{ width: '200px', height: '200px' }}></div>
+      )}
+    </main>
   );
-}
+};
+
+export default Loading;
