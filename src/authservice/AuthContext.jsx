@@ -3,7 +3,7 @@ import React, { useEffect, createContext, useState } from 'react';
 import {
     onAuthStateChanged,
     getAuth,
-    signOut, // Importe a função de logout
+    signOut,
 } from 'firebase/auth';
 import firebase_app from '../firebase/config';
 import Loading from '../app/loading';

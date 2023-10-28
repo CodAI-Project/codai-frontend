@@ -16,10 +16,9 @@ function SelectCustom({ options, onSelectChange, isValid }) {
   }, [isValid]);
 
   useEffect(() => {
-    // Verifica se há opções disponíveis
     if (options.length > 0) {
-      setSelectedValue(options[0].template); // Seleciona o primeiro item
-      onSelectChange(options[0].template); // Dispara a função de seleção
+      setSelectedValue(options[0].template); 
+      onSelectChange(options[0].template); 
     }
   }, [options, onSelectChange]);
 
