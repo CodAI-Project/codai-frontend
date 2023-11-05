@@ -3,7 +3,7 @@
 import React from "react";
 import { useInView } from "react-intersection-observer";
 import Head from "next/head";
-import Hero from "./components/hero";
+import Hero from "./components/Hero";
 import Navbar from "./components/navbar";
 import SectionTitle from "./components/sectionTitle";
 import { benefitOne } from "./components/data";
