@@ -51,5 +51,5 @@ steps:
 - script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
-    npm run deploy:dev
+    npm run deploy:$(APP_ENV)
   displayName: 'Deploying Firebase Hosting on ${{ parameters.Environment }}'
