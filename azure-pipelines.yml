@@ -35,5 +35,7 @@ steps:
   
     
 - script: |
-    firebase deploy --project dev --token "1//0hrjIiiNeY4ClCgYIARAAGBESNwF-L9IrmODSQfgrmbAhT-ytveQk7rOc8lzwHRHVWPcPV1TjnobEzKCGFhCVmotvh-Z8V003jjU" --force
+    echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
+    export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
+    firebase deploy --project dev
   displayName: 'deploying firebase project'
