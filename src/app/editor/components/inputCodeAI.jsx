@@ -5,7 +5,7 @@ import { LuSend } from "react-icons/lu";
 import SelectCustom from "./selectCustom";
 import { Formik, Form, Field } from "formik";
 import showToast from "../../ui/toastCustom";
-import { useAuthContext } from "./../../../authservice/authContext";
+import { useAuthContext } from "@//authservice/authContext";
 import { patchChatTitle } from "@//actions/chat";
 
 import { getAllFrameworkOptions } from "@//actions/frameworks";

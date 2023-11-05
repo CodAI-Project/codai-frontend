@@ -19,7 +19,6 @@ export const AuthContextProvider = ({
 }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-
     React.useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from "react";
-import { useAuthContext } from "../authservice/authContext";
+import { useAuthContext } from "@//authservice/authContext";
 import { useRouter } from "next/navigation";
 
 function ProtectedPage({ children }) {
