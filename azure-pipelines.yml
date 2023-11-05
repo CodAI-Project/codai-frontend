@@ -35,9 +35,13 @@ steps:
 - script: |
     firebase experiments:enable webframeworks
   displayName: 'enabling firebase experiments'
+
+- script: |
+    firebase functions:config:get --project dev > .runtimeconfig.json
+  displayName: 'GET runtimeconfig'
+
     
 - script: |
-    
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
     npm run deploy:dev
