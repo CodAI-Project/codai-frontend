@@ -42,5 +42,5 @@ steps:
     
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
-    firebase deploy --project dev
+    npm run deploy:dev
   displayName: 'deploying firebase project'
