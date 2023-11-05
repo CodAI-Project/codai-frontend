@@ -15,7 +15,7 @@ steps:
 
 - script: |
     npm install -g firebase-tools
-    npm install next@latest react@latest react-dom@latest
+    npm install next@13.4.18 react@18.2.0 react-dom@18.2.0
     npm install
   displayName: 'installing dependencies'
 
