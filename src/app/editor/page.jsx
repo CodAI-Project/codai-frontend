@@ -5,7 +5,7 @@ import Topbar from './components/topSideBar';
 import EditorContent from './components/editorContent';
 import ProtectedRoute from './../../admin/protectedPage';
 import { ChatProvider } from './context/chatContext';
-import { AuthContextProvider } from '@//authservice/authContext';
+import { AuthContextProvider } from '@//authservice/AuthContext';
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   return (

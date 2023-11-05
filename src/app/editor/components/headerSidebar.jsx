@@ -12,7 +12,7 @@ import {
   RadioGroup,
   Radio,
 } from "@nextui-org/react";
-import { useAuthContext } from "@//authservice/authContext";
+import { useAuthContext } from "@//authservice/AuthContext";
 
 export default function HeaderSidebar({ active }) {
   const { user, handleLogout } = useAuthContext();

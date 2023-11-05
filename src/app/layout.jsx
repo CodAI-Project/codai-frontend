@@ -2,7 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { Providers } from "./providers";
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContextProvider } from '@//authservice/authContext';
+import { AuthContextProvider } from '@//authservice/AuthContext';
 
 const inter = Inter({ subsets: ['latin'] })
 
