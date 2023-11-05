@@ -35,6 +35,7 @@ steps:
   
     
 - script: |
+    firebase experiments:enable webframeworks
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
     firebase deploy --project dev
