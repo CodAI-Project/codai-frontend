@@ -2,11 +2,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import EditorPanel from "./editorPanel";
-import MainEditor from "./MainEditor";
+import MainEditor from "./mainEditor";
 import { ChatProvider, useChat } from "../context/chatContext";
-import InputCodeAI from "./InputCodeAI";
+import InputCodeAI from "./inputCodeAI";
 import Loading from "../../loading";
-import AnimationComponent from "./LoadingEditor";
+import AnimationComponent from "./loadingEditor";
 
 export default function EditorContent() {
   const { selectedChat, loading} = useChat();

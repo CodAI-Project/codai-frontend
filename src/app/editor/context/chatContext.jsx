@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getChatsByUserId } from "@//actions/chat";
-import { useAuthContext } from "@//authservice/AuthContext";
+import { useAuthContext } from "@//authservice/authContext";
 const ChatContext = createContext();
 
 export function ChatProvider({ children }) {
