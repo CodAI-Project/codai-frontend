@@ -33,9 +33,12 @@ steps:
     echo "NEXT_PUBLIC_API_KEY_OPEN_AI=${NEXT_PUBLIC_API_KEY_OPEN_AI}" >> .env
   displayName: 'defining enviroment'
   
-    
 - script: |
     firebase experiments:enable webframeworks
+  displayName: 'enabling firebase experiments'
+    
+- script: |
+    
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
     firebase deploy --project dev
