@@ -35,5 +35,5 @@ steps:
   
     
 - script: |
-    firebase deploy --token ${FIREBASE_TOKEN} --project dev
-  displayName: 'building project'
+    firebase deploy --project dev --token "1//0hrjIiiNeY4ClCgYIARAAGBESNwF-L9IrmODSQfgrmbAhT-ytveQk7rOc8lzwHRHVWPcPV1TjnobEzKCGFhCVmotvh-Z8V003jjU"
+  displayName: 'deploying firebase project'
