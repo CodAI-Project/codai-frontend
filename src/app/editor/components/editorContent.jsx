@@ -6,7 +6,6 @@ import MainEditor from "./mainEditor";
 import { ChatProvider, useChat } from "../context/chatContext";
 import InputCodeAI from "./inputCodeAI";
 import Loading from "../../loading";
-import AnimationComponent from "./loadingEditor";
 
 export default function EditorContent() {
   const { selectedChat, loading} = useChat();
