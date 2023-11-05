@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy:dev": "env-cmd -f .env npm run build && firebase deploy --only hosting:codai -P dev",
-    "deploy:prod": "env-cmd -f .env.production npm run build && firebase deploy --only hosting:codai -P prod"
+    "deploy:dev": "npm run build && firebase deploy --only hosting:codai -P dev",
+    "deploy:prod": "npm run build && firebase deploy --only hosting:codai -P prod"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
